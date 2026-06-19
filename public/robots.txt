@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://smartmarketingdigital.com/sitemap-index.xml

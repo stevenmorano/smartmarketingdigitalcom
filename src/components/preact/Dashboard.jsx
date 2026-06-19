@@ -8,30 +8,66 @@ const INSIGHTS = [
     title: "Audience Optimization",
     text: "Your best performing e-commerce audience segment is 25-34, representing 42% of total conversions.",
     badgeColor: "var(--color-primary)",
-    icon: "👤"
+    icon: "audience"
   },
   {
     id: 2,
     title: "Meta Ads Opportunity",
     text: "Increasing budget by 15% on high-intent lookalikes could raise ROAS by up to 22%.",
     badgeColor: "var(--color-secondary)",
-    icon: "📈"
+    icon: "meta"
   },
   {
     id: 3,
     title: "Email Automation Efficiency",
     text: "Welcome & Abandoned Cart automations generated 37% of revenue this month with 0 ad spend.",
     badgeColor: "var(--color-accent-teal)",
-    icon: "✉️"
+    icon: "email"
   },
   {
     id: 4,
     title: "Keyword Cost Reduction",
     text: "Excluding low-intent search phrases reduced overall Cost Per Lead by 12.5% this week.",
     badgeColor: "#8b5cf6",
-    icon: "🔍"
+    icon: "keyword"
   }
 ];
+
+function renderInsightIcon(iconName) {
+  const style = { width: '1.2rem', height: '1.2rem', display: 'block' };
+  switch (iconName) {
+    case 'audience':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      );
+    case 'meta':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+          <polyline points="17 6 23 6 23 12" />
+        </svg>
+      );
+    case 'email':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" />
+        </svg>
+      );
+    case 'keyword':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
 export default function Dashboard() {
   const [insightIndex, setInsightIndex] = useState(0);
@@ -63,20 +99,21 @@ export default function Dashboard() {
           font-family: var(--font-body);
         }
 
-        /* Card Common Styles */
+        /* Card Common Styles - Ethereal Glass Vantablack */
         .db-card {
-          background: rgba(13, 18, 34, 0.7);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: rgba(12, 12, 14, 0.75);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 16px;
           padding: 1.5rem;
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-          transition: border-color 0.3s ease;
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+          transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .db-card:hover {
-          border-color: rgba(59, 130, 246, 0.25);
+          border-color: rgba(59, 130, 246, 0.3);
+          background: rgba(16, 16, 20, 0.85);
         }
 
         .card-title {
@@ -138,6 +175,7 @@ export default function Dashboard() {
           width: 100%;
           height: 32px;
           margin-top: 0.5rem;
+          overflow: visible;
         }
 
         .spark-path {
@@ -148,6 +186,22 @@ export default function Dashboard() {
           stroke-dasharray: 200;
           stroke-dashoffset: 200;
           animation: drawPath 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .revenue-path {
+          fill: none;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 800;
+          stroke-dashoffset: 800;
+          animation: drawPath 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Fallback selector for cache resilience if browser runs old JS with .spark-path class */
+        .revenue-chart-svg .spark-path {
+          stroke-dasharray: 800 !important;
+          stroke-dashoffset: 800 !important;
+          animation: drawPath 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
         }
 
         /* 2. Lead Funnel Card */
@@ -317,6 +371,7 @@ export default function Dashboard() {
         .revenue-chart-svg {
           width: 100%;
           height: 100px;
+          overflow: visible;
         }
 
         /* 5. AI Insights Card */
@@ -412,7 +467,7 @@ export default function Dashboard() {
             </div>
             <svg class="sparkline-svg" viewBox="0 0 120 40">
               <path class="spark-path" stroke="var(--color-primary)" stroke-dashoffset="0"
-                d="M0,35 Q15,25 30,28 T60,18 T90,22 T120,5" style="animation-delay: 0.1s;" />
+                d="M2,35 Q15,25 30,28 T60,18 T90,22 T118,5" style="animation-delay: 0.1s;" />
             </svg>
           </div>
           {/* CPL */}
@@ -424,7 +479,7 @@ export default function Dashboard() {
             </div>
             <svg class="sparkline-svg" viewBox="0 0 120 40">
               <path class="spark-path" stroke="var(--color-secondary)" stroke-dashoffset="0"
-                d="M0,5 Q15,20 30,12 T60,25 T90,15 T120,32" style="animation-delay: 0.3s;" />
+                d="M2,5 Q15,20 30,12 T60,25 T90,15 T118,32" style="animation-delay: 0.3s;" />
             </svg>
           </div>
           {/* ROAS */}
@@ -436,7 +491,7 @@ export default function Dashboard() {
             </div>
             <svg class="sparkline-svg" viewBox="0 0 120 40">
               <path class="spark-path" stroke="var(--color-accent-teal)" stroke-dashoffset="0"
-                d="M0,32 Q15,30 30,22 T60,18 T90,8 T120,2" style="animation-delay: 0.5s;" />
+                d="M2,32 Q15,30 30,22 T60,18 T90,10 T118,5" style="animation-delay: 0.5s;" />
             </svg>
           </div>
         </div>
@@ -544,13 +599,13 @@ export default function Dashboard() {
             </linearGradient>
           </defs>
           {/* Gradient Fill under line */}
-          <path d="M0,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L400,10 L400,100 L0,100 Z" fill="url(#chartGlow)" />
+          <path d="M2,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L398,15 L398,100 L2,100 Z" fill="url(#chartGlow)" />
           {/* Grid line grid */}
           <line x1="0" y1="33" x2="400" y2="33" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
           <line x1="0" y1="66" x2="400" y2="66" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
           {/* Animated line path */}
-          <path class="spark-path" stroke="url(#gradient-line)" stroke-width="3.5" stroke-dashoffset="0"
-            d="M0,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L400,10" />
+          <path class="revenue-path" stroke="url(#gradient-line)" stroke-width="3.5"
+            d="M2,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L398,15" />
           <linearGradient id="gradient-line" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stop-color="var(--color-primary)" />
             <stop offset="100%" stop-color="var(--color-secondary)" />
@@ -568,7 +623,9 @@ export default function Dashboard() {
           </span>
         </div>
         <div class={`insight-card-inner ${isAnimating ? 'fade-out' : ''}`}>
-          <div class="insight-icon-box">{activeInsight.icon}</div>
+          <div class="insight-icon-box" style={{ color: activeInsight.badgeColor }}>
+            {renderInsightIcon(activeInsight.icon)}
+          </div>
           <div class="insight-content-box">
             <div class="insight-header">
               <span class="insight-pill" style={`background-color: ${activeInsight.badgeColor};`}>Insight</span>

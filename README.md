@@ -11,7 +11,8 @@ The site is built with a focus on speed, SEO, and visual excellence, combining s
 1. **Framework:** [Astro](https://astro.build) — compiled to 100% static HTML by default to optimize PageSpeed, mobile Core Web Vitals, and search crawlability.
 2. **Interactivity:** [Preact](https://preactjs.com) — a lightweight (3KB) React alternative used for hydrated UI elements ("islands") such as the animated campaign dashboard and the intake modal.
 3. **Styling:** Vanilla CSS — custom properties and scoped styles used exclusively to prevent visual leakage and eliminate CSS library overhead.
-4. **Lead capture:** Polished multi-step form syncs user metrics and details directly to your serverless email notification provider (e.g. Web3Forms or Formspree).
+4. **View Transitions:** [ClientRouter](https://docs.astro.build/en/guides/view-transitions/) — native transition router that enables instant, smooth page fade transitions while preserving interactive Preact island states.
+5. **Lead Capture:** Polished multi-step form syncs user metrics and details directly to your serverless email notification provider (e.g. Web3Forms or Formspree).
 
 ---
 
@@ -19,23 +20,27 @@ The site is built with a focus on speed, SEO, and visual excellence, combining s
 
 ```text
 /
-├── public/                 # Static assets (images, logos, headshots)
-│   └── steven_morano.png   # Generated founder professional headshot
+├── public/                 # Static assets (favicons, robots.txt)
+│   ├── favicon.ico         
+│   ├── favicon.svg         
+│   └── robots.txt          # SEO crawler settings
 ├── src/
+│   ├── assets/             # Raw media assets optimized by Astro
+│   │   └── steven_morano.jpg # Source founder professional headshot
 │   ├── components/
 │   │   ├── astro/          # Static layout sections
 │   │   │   ├── Footer.astro     # Contact details & footer CTA
-│   │   │   ├── Founder.astro    # Steven Morano bio & value props
+│   │   │   ├── Founder.astro    # Steven Morano bio & value props (optimizes profile image)
 │   │   │   ├── Framework.astro  # AI-Enhanced marketing system loop
 │   │   │   ├── Hero.astro       # Headline copy, badges, & dashboard mount
-│   │   │   ├── Navbar.astro     # Fixed header, mobile drawer, event listeners
+│   │   │   ├── Navbar.astro     # Fixed header, morphing hamburger menu, event listeners
 │   │   │   ├── Process.astro    # 4-Step Audit-to-Scale timeline
 │   │   │   └── Solutions.astro  # Services grid & solution cards
 │   │   └── preact/         # Dynamic client-side components
 │   │       ├── Dashboard.jsx    # SVG line, donut, funnel charts & AI insight cycle
-│   │       └── IntakeModal.jsx  # Multi-step intake form dialog
+│   │       └── IntakeModal.jsx  # Multi-step intake form dialog with focus trap
 │   ├── layouts/
-│   │   └── Layout.astro    # Base HTML template, metadata, and font load
+│   │   └── Layout.astro    # Base HTML template, metadata, fonts, & ClientRouter
 │   ├── pages/
 │   │   └── index.astro     # Main page assembling all layouts
 │   └── styles/
@@ -44,6 +49,7 @@ The site is built with a focus on speed, SEO, and visual excellence, combining s
 ├── package.json            # Scripts and package dependencies
 └── tsconfig.json           # Type definitions
 ```
+
 
 ---
 

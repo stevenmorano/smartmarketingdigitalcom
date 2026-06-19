@@ -1,14 +1,16 @@
 ---
 // src/components/astro/Founder.astro
+import { Image } from 'astro:assets';
+import stevenMoranoProfile from '../../assets/steven_morano.jpg';
 ---
 
 <section class="founder section-light" id="about">
-  <div class="container founder-container">
+  <div class="container founder-container reveal-stagger">
     
     <!-- Left Column: Headshot -->
-    <div class="founder-image-wrapper">
+    <div class="founder-image-wrapper reveal-item">
       <div class="image-glow"></div>
-      <img src="/steven_morano.jpg" alt="Steven Morano - Marketing Consultant" class="founder-img" />
+      <Image src={stevenMoranoProfile} alt="Steven Morano - Marketing Consultant" class="founder-img" />
       <div class="signature-box">
         <svg class="signature-svg" viewBox="0 0 160 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <!-- A beautiful custom-drawn SVG path for Steven Morano's signature -->
@@ -20,19 +22,19 @@
     </div>
 
     <!-- Right Column: Biography & Value Props -->
-    <div class="founder-content">
-      <span class="sub-title">About the Founder</span>
-      <h2 class="founder-title">Meet Steven Morano</h2>
+    <div class="founder-content reveal-item">
+      <span class="sub-title">Direct Access</span>
+      <h2 class="founder-title">Constructed by Steven Morano</h2>
       
       <div class="founder-bio">
         <p class="bio-paragraph highlight-text">
-          I'm a hands-on marketing consultant with 10+ years of experience in digital marketing, lead generation, paid media, CRM systems, automation, and analytics.
+          I am a hands-on technical consultant who designs, codes, and configures marketing systems. For over 10 years, I've helped brands build customer acquisition loops that scale.
         </p>
         <p class="bio-paragraph">
-          I work with small businesses, service providers, and e-commerce brands to build smarter marketing systems that generate more leads, close more sales, and run more efficiently. 
+          Traditional digital marketing agencies lock you into expensive retainers, then hand your account to junior managers who lack technical execution skills. When you work with me, you get direct senior strategy and immediate technical implementation.
         </p>
         <p class="bio-paragraph">
-          Unlike traditional agencies where your account is handed off to junior coordinators, you work directly with me. No account managers, no communication delays — just expert strategy and direct execution.
+          Whether writing custom tracking scripts, setting up server-side APIs, structuring automated email flows, or optimizing paid search bids, I build the actual architecture that drives your business forward.
         </p>
       </div>
 
@@ -41,28 +43,34 @@
         
         <!-- Value 1: Direct Access -->
         <div class="highlight-item">
-          <div class="highlight-icon">👥</div>
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="highlight-svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
           <div>
-            <h4 class="highlight-heading">Direct Access</h4>
-            <p class="highlight-desc">Work directly with me from start to finish. No middlemen.</p>
+            <h4 class="highlight-heading">Direct Partnership</h4>
+            <p class="highlight-desc">Work directly with the engineer executing your strategy. Zero account managers, zero telephone-game delays.</p>
           </div>
         </div>
 
         <!-- Value 2: Strategy + Execution -->
         <div class="highlight-item">
-          <div class="highlight-icon">⚡</div>
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="highlight-svg"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polyline></svg>
+          </div>
           <div>
-            <h4 class="highlight-heading">Strategy + Execution</h4>
-            <p class="highlight-desc">I do both the high-level thinking and the technical building.</p>
+            <h4 class="highlight-heading">Full-Stack Capabilities</h4>
+            <p class="highlight-desc">I write the code, configure the servers, design the landing pages, and optimize the ad accounts myself.</p>
           </div>
         </div>
 
         <!-- Value 3: Automation-First -->
         <div class="highlight-item">
-          <div class="highlight-icon">🤖</div>
+          <div class="highlight-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="highlight-svg"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
           <div>
-            <h4 class="highlight-heading">Automation-First</h4>
-            <p class="highlight-desc">Systems that run automatically to save time and drive ROI.</p>
+            <h4 class="highlight-heading">Built to Scale</h4>
+            <p class="highlight-desc">No short-term hacks. I construct stable automation pipelines that run reliably and deliver predictable ROI.</p>
           </div>
         </div>
 
@@ -219,7 +227,6 @@
   }
 
   .highlight-icon {
-    font-size: 1.1rem;
     width: 2.25rem;
     height: 2.25rem;
     background: rgba(59, 130, 246, 0.04);
@@ -230,6 +237,11 @@
     justify-content: center;
     flex-shrink: 0;
     color: var(--color-primary);
+  }
+
+  .highlight-svg {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 
   .highlight-heading {

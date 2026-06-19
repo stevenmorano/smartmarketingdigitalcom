@@ -6,7 +6,7 @@
   <div class="container">
     
     <!-- Section Header -->
-    <div class="section-header">
+    <div class="section-header reveal-item">
       <span class="sub-title">My Framework</span>
       <h2 class="main-title">The AI-Enhanced Marketing System</h2>
       <p class="section-desc">
@@ -18,7 +18,7 @@
     <div class="flow-container">
       
       <!-- Step 1: Traffic Sources -->
-      <div class="flow-node">
+      <div class="flow-node reveal-item">
         <div class="node-num">01</div>
         <h3 class="node-title">Traffic Sources</h3>
         <div class="node-logo-row">
@@ -34,7 +34,7 @@
         </ul>
       </div>
 
-      <div class="flow-arrow">
+      <div class="flow-arrow reveal-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Step 2: Landing Pages -->
-      <div class="flow-node">
+      <div class="flow-node reveal-item">
         <div class="node-num">02</div>
         <h3 class="node-title">Landing Pages</h3>
         <div class="node-visual-box">
@@ -59,7 +59,7 @@
         </ul>
       </div>
 
-      <div class="flow-arrow">
+      <div class="flow-arrow reveal-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- Step 3: CRM & Automation -->
-      <div class="flow-node">
+      <div class="flow-node reveal-item">
         <div class="node-num">03</div>
         <h3 class="node-title">CRM & Automation</h3>
         <div class="node-visual-box">
@@ -85,7 +85,7 @@
         </ul>
       </div>
 
-      <div class="flow-arrow">
+      <div class="flow-arrow reveal-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -93,7 +93,7 @@
       </div>
 
       <!-- Step 4: AI Optimization -->
-      <div class="flow-node highlight-node">
+      <div class="flow-node highlight-node reveal-item">
         <div class="node-glow-border"></div>
         <div class="node-num">04</div>
         <h3 class="node-title">AI Optimization</h3>
@@ -110,7 +110,7 @@
         </ul>
       </div>
 
-      <div class="flow-arrow">
+      <div class="flow-arrow reveal-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -118,7 +118,7 @@
       </div>
 
       <!-- Step 5: Reporting Dashboard -->
-      <div class="flow-node">
+      <div class="flow-node reveal-item">
         <div class="node-num">05</div>
         <h3 class="node-title">Reporting Hub</h3>
         <div class="node-visual-box">
@@ -136,7 +136,7 @@
         </ul>
       </div>
 
-      <div class="flow-arrow">
+      <div class="flow-arrow reveal-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -144,7 +144,7 @@
       </div>
 
       <!-- Step 6: Sales / Revenue Growth -->
-      <div class="flow-node">
+      <div class="flow-node reveal-item">
         <div class="node-num">06</div>
         <h3 class="node-title">Revenue Growth</h3>
         <div class="node-visual-box text-teal">
@@ -160,7 +160,7 @@
     </div>
 
     <!-- Return Loop Visual -->
-    <div class="feedback-loop">
+    <div class="feedback-loop reveal-item">
       <svg class="loop-svg" viewBox="0 0 1000 120" fill="none" preserveAspectRatio="none">
         <!-- Loop line curving from bottom right back to bottom left -->
         <path d="M 900 20 C 900 80, 100 80, 100 20" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2" stroke-dasharray="6,6" id="loop-path" />
@@ -394,6 +394,19 @@
       stroke-dashoffset: -200;
     }
   }
+
+  /* Staggered entry animations for flow items */
+  .flow-container > .reveal-item:nth-child(1) { transition-delay: 0ms; }
+  .flow-container > .reveal-item:nth-child(2) { transition-delay: 100ms; }
+  .flow-container > .reveal-item:nth-child(3) { transition-delay: 200ms; }
+  .flow-container > .reveal-item:nth-child(4) { transition-delay: 300ms; }
+  .flow-container > .reveal-item:nth-child(5) { transition-delay: 400ms; }
+  .flow-container > .reveal-item:nth-child(6) { transition-delay: 500ms; }
+  .flow-container > .reveal-item:nth-child(7) { transition-delay: 600ms; }
+  .flow-container > .reveal-item:nth-child(8) { transition-delay: 700ms; }
+  .flow-container > .reveal-item:nth-child(9) { transition-delay: 800ms; }
+  .flow-container > .reveal-item:nth-child(10) { transition-delay: 900ms; }
+  .flow-container > .reveal-item:nth-child(11) { transition-delay: 1000ms; }
 
   /* Responsive styling */
   @media (max-width: 1100px) {

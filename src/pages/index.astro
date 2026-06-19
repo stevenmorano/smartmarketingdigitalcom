@@ -24,6 +24,6 @@ import IntakeModal from '../components/preact/IntakeModal.jsx';
   </main>
   <Footer />
 
-  <!-- Global Lead Intake Form Modal (Hydrated Island) -->
-  <IntakeModal client:load />
+  <!-- Global Lead Intake Form Modal (Hydrated Island - Defer to Idle for Performance) -->
+  <IntakeModal client:idle />
 </Layout>

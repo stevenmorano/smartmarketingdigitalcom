@@ -1,5 +1,5 @@
 // src/components/preact/IntakeModal.jsx
-import { useState, useEffect } from 'preact/hooks';
+import { useState, useEffect, useRef } from 'preact/hooks';
 
 export default function IntakeModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +7,8 @@ export default function IntakeModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const modalRef = useRef(null);
 
   // Form Fields
   const [formData, setFormData] = useState({
@@ -34,7 +36,60 @@ export default function IntakeModal() {
     return () => window.removeEventListener('open-intake', handleOpen);
   }, []);
 
+  // Handle focus trapping and auto-focus when modal opens
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Auto-focus the name input field
+    const focusTimeout = setTimeout(() => {
+      const nameInput = document.getElementById('intake-name');
+      if (nameInput) {
+        nameInput.focus();
+      }
+    }, 50);
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        if (!modalRef.current) return;
+        
+        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusableElements = Array.from(modalRef.current.querySelectorAll(focusableSelectors));
+        
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          // Shift + Tab (Backwards)
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          // Tab (Forwards)
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(focusTimeout);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
   const closeModal = () => {
+    if (isSubmitting) return;
     setIsOpen(false);
     document.body.classList.remove('modal-open');
   };
@@ -81,19 +136,11 @@ export default function IntakeModal() {
     setErrorMsg("");
 
     try {
-      // PRO TIP: To wire this to a live backend (like Web3Forms, Formspree, or Netlify Forms), 
-      // replace the simulated promise below with a real fetch call, e.g.:
-      /*
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: "YOUR_ACCESS_KEY_HERE",
-          ...formData
-        })
-      });
-      if (!response.ok) throw new Error("API Submission failed");
-      */
+      // Simulated network failure trigger for manual testing (type 'fail' in name or email)
+      if (formData.name.toLowerCase().includes('fail') || formData.email.toLowerCase().includes('fail')) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        throw new Error("Simulated network failure");
+      }
 
       // Simulated submission delay
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -155,21 +202,51 @@ export default function IntakeModal() {
           right: 1.25rem;
           background: rgba(255, 255, 255, 0.03);
           border: 1px solid rgba(255, 255, 255, 0.05);
-          width: 2rem;
-          height: 2rem;
+          width: 2.75rem;
+          height: 2.75rem;
           border-radius: 50%;
           color: var(--color-text-dark-secondary);
           display: flex;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          font-size: 1.1rem;
+          font-size: 1.4rem;
           transition: var(--transition-smooth);
+          outline: none;
         }
 
         .modal-close-btn:hover {
           background: rgba(255, 255, 255, 0.08);
           color: var(--color-text-dark-primary);
+        }
+
+        .modal-close-btn:focus-visible {
+          outline: 2px solid var(--color-primary);
+          outline-offset: 2px;
+        }
+
+        .modal-close-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .btn-spinner-content {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+
+        .spinner-svg {
+          width: 1rem;
+          height: 1rem;
+          animation: modalSpinnerRotate 1.5s linear infinite;
+        }
+
+        @keyframes modalSpinnerRotate {
+          to {
+            transform: rotate(360deg);
+          }
         }
 
         /* Form Header & Steps Indicator */
@@ -355,8 +432,8 @@ export default function IntakeModal() {
         }
       `}</style>
 
-      <div class="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button class="modal-close-btn" aria-label="Close" onClick={closeModal}>×</button>
+      <div ref={modalRef} class="modal-container" onClick={(e) => e.stopPropagation()}>
+        <button class="modal-close-btn" aria-label="Close" onClick={closeModal} disabled={isSubmitting}>×</button>
 
         {success ? (
           <div class="success-box animate-float">
@@ -486,14 +563,21 @@ export default function IntakeModal() {
               {step > 1 ? (
                 <button type="button" class="btn btn-light-secondary" onClick={prevStep} disabled={isSubmitting}>Back</button>
               ) : (
-                <button type="button" class="btn btn-light-secondary" onClick={closeModal}>Cancel</button>
+                <button type="button" class="btn btn-light-secondary" onClick={closeModal} disabled={isSubmitting}>Cancel</button>
               )}
 
               {step < 3 ? (
                 <button type="button" class="btn btn-primary" onClick={nextStep}>Next Step</button>
               ) : (
                 <button type="submit" class="btn btn-primary" disabled={isSubmitting}>
-                  {isSubmitting ? "Submitting Info..." : "Request Free Review"}
+                  {isSubmitting ? (
+                    <span class="btn-spinner-content">
+                      <svg class="spinner-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-linecap="round"></circle>
+                      </svg>
+                      Submitting...
+                    </span>
+                  ) : "Request Free Review"}
                 </button>
               )}
             </div>
