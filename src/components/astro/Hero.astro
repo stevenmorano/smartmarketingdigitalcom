@@ -1,0 +1,313 @@
+---
+// src/components/astro/Hero.astro
+import Dashboard from '../preact/Dashboard.jsx';
+---
+
+<section class="hero section-dark">
+  <div class="hero-glow animate-pulse-glow"></div>
+  <div class="container hero-container">
+    
+    <!-- Hero Left Column: Copy & CTAs -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI-Driven Marketing, Real Business Results
+      </div>
+      
+      <h1 class="hero-title">
+        Smarter Marketing Systems Built with <span class="gradient-text">AI.</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        I help small businesses and e-commerce brands generate more leads, close more sales, and run more efficient marketing with AI-powered strategy, paid media, automation, and analytics.
+      </p>
+
+      <!-- Key Capabilities Tags -->
+      <div class="capabilities-grid">
+        <div class="cap-tag">
+          <span class="cap-icon">🧠</span>
+          <span>AI-Powered Strategy</span>
+        </div>
+        <div class="cap-tag">
+          <span class="cap-icon">🎯</span>
+          <span>Paid Media</span>
+        </div>
+        <div class="cap-tag">
+          <span class="cap-icon">🤖</span>
+          <span>CRM Automation</span>
+        </div>
+        <div class="cap-tag">
+          <span class="cap-icon">📊</span>
+          <span>Analytics</span>
+        </div>
+        <div class="cap-tag">
+          <span class="cap-icon">🚀</span>
+          <span>Lead Generation</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-trigger-intake>
+          Request a Free Strategy Review
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <a href="#framework" class="btn btn-secondary">
+          <svg class="btn-play" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          See How It Works
+        </a>
+      </div>
+
+      <!-- Solo Consultant Value Badges -->
+      <div class="value-badges">
+        <div class="val-badge">
+          <div class="val-badge-icon">👤</div>
+          <div>
+            <div class="val-badge-title">Solo Consultant</div>
+            <div class="val-badge-desc">Direct access, no middlemen.</div>
+          </div>
+        </div>
+        <div class="val-badge">
+          <div class="val-badge-icon">⚡</div>
+          <div>
+            <div class="val-badge-title">Hands-On & Technical</div>
+            <div class="val-badge-desc">Strategy + execution.</div>
+          </div>
+        </div>
+        <div class="val-badge">
+          <div class="val-badge-icon">⚙️</div>
+          <div>
+            <div class="val-badge-title">Built for Results</div>
+            <div class="val-badge-desc">Systems that scale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Right Column: Dynamic Dashboard Island -->
+    <div class="hero-dashboard">
+      <Dashboard client:load />
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 7.5rem; /* Space for fixed Navbar */
+    background-image: var(--gradient-hero);
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 400px;
+    height: 400px;
+    background: var(--gradient-glow);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-badge {
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--color-primary);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: pulseGlow 2s infinite;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-dark-secondary);
+    margin-bottom: 1.75rem;
+    max-width: 540px;
+  }
+
+  /* Capabilities grid */
+  .capabilities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.25rem;
+    max-width: 520px;
+  }
+
+  .cap-tag {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-dark-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: var(--transition-smooth);
+  }
+
+  .cap-tag:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--color-text-dark-primary);
+  }
+
+  .cap-icon {
+    font-size: 0.95rem;
+  }
+
+  /* Action buttons */
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-arrow {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-play {
+    width: 0.85rem;
+    height: 0.85rem;
+    color: var(--color-primary);
+  }
+
+  /* Solo consultant indicators */
+  .value-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .val-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .val-badge-icon {
+    font-size: 1.1rem;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .val-badge-title {
+    font-family: var(--font-headings);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-dark-primary);
+  }
+
+  .val-badge-desc {
+    font-size: 0.75rem;
+    color: var(--color-text-dark-secondary);
+  }
+
+  /* Right column dashboard container */
+  .hero-dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      align-items: center;
+    }
+
+    .hero-badge, .capabilities-grid, .hero-actions {
+      justify-content: center;
+    }
+
+    .hero-subtitle {
+      max-width: 600px;
+    }
+
+    .value-badges {
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .val-badge {
+      text-align: left;
+      max-width: 320px;
+      width: 100%;
+    }
+  }
+</style>

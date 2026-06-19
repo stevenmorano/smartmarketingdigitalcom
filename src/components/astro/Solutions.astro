@@ -1,0 +1,226 @@
+---
+// src/components/astro/Solutions.astro
+---
+
+<section class="solutions section-light" id="services">
+  <div class="container">
+    
+    <!-- Section Header -->
+    <div class="section-header">
+      <span class="sub-title">Services</span>
+      <h2 class="main-title">Solutions That Drive Growth</h2>
+      <p class="section-desc">
+        I construct tailored marketing systems integrating advanced data analytics and automation pipelines to help your business acquire leads and increase revenue.
+      </p>
+    </div>
+
+    <!-- Solutions Grid -->
+    <div class="solutions-grid">
+      
+      <!-- Card 1: AI Marketing Strategy -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="M12 6v6l4 2"></path>
+            <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.15"></circle>
+          </svg>
+        </div>
+        <h3 class="card-heading">AI Marketing Strategy</h3>
+        <p class="card-text">
+          Data-driven strategies powered by AI insights to find new market opportunities, eliminate ad budget waste, and accelerate your growth.
+        </p>
+      </div>
+
+      <!-- Card 2: Paid Media Management -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <path d="M2 12h20M12 2v20"></path>
+            <circle cx="12" cy="12" r="6" stroke-width="2"></circle>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <h3 class="card-heading">Paid Media Management</h3>
+        <p class="card-text">
+          High-performing paid ad campaigns across Google Search, Meta Ads, and YouTube that attract qualified leads and drive e-commerce sales.
+        </p>
+      </div>
+
+      <!-- Card 3: CRM & Marketing Automation -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+        </div>
+        <h3 class="card-heading">CRM & Marketing Automation</h3>
+        <p class="card-text">
+          Automated customer journeys and personalized lead nurture sequences that convert warm prospects into loyal, long-term clients.
+        </p>
+      </div>
+
+      <!-- Card 4: Lead Generation Funnels -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+        </div>
+        <h3 class="card-heading">Lead Generation Funnels</h3>
+        <p class="card-text">
+          Sleek, high-converting landing pages, optimized offers, and targeted capture funnels designed to acquire consistent, quality prospects.
+        </p>
+      </div>
+
+      <!-- Card 5: Analytics & Tracking -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+            <path d="M2 20h20"></path>
+          </svg>
+        </div>
+        <h3 class="card-heading">Analytics & Tracking</h3>
+        <p class="card-text">
+          Custom attribution models and dashboards mapping full customer journeys, giving you clear visibility into which channels drive actual sales.
+        </p>
+      </div>
+
+      <!-- Card 6: Conversion Optimization -->
+      <div class="solution-card">
+        <div class="card-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="card-svg">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="card-heading">Conversion Optimization</h3>
+        <p class="card-text">
+          A/B testing, user behavior analytics, and UX improvements to remove funnel friction and increase your conversion rates.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .solutions {
+    background-color: var(--color-bg-light-deep);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 4rem;
+  }
+
+  .sub-title {
+    font-family: var(--font-headings);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: var(--color-text-light-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--color-text-light-secondary);
+    font-size: 1rem;
+  }
+
+  /* Cards Grid */
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .solution-card {
+    background: var(--color-bg-light-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .solution-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.25);
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.04), var(--shadow-md);
+  }
+
+  .card-icon-box {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: var(--transition-smooth);
+  }
+
+  .solution-card:hover .card-icon-box {
+    background: var(--gradient-blue-cyan);
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  .card-svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .card-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-light-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    color: var(--color-text-light-secondary);
+    line-height: 1.55;
+  }
+
+  /* Responsive styling */
+  @media (max-width: 992px) {
+    .solutions-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+    .solution-card {
+      padding: 1.75rem 1.5rem;
+    }
+  }
+</style>

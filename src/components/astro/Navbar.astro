@@ -1,0 +1,240 @@
+---
+// src/components/astro/Navbar.astro
+---
+
+<header class="navbar">
+  <div class="container nav-container">
+    <a href="#" class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"></line>
+        <line x1="12" y1="20" x2="12" y2="4"></line>
+        <line x1="6" y1="20" x2="6" y2="14"></line>
+        <path d="M2 20h20"></path>
+      </svg>
+      <span class="logo-text">Smart Marketing <span class="logo-accent">Digital</span></span>
+    </a>
+
+    <!-- Desktop Menu -->
+    <nav class="nav-menu">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#framework" class="nav-link">Framework</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#about" class="nav-link">About</a>
+      <button class="btn btn-primary nav-cta" data-trigger-intake>Request a Free Strategy Review</button>
+    </nav>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-toggle" aria-label="Toggle Menu" id="mobile-toggle">
+      <svg class="toggle-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg class="toggle-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <nav class="mobile-nav-links">
+      <a href="#services" class="mobile-link">Services</a>
+      <a href="#framework" class="mobile-link">Framework</a>
+      <a href="#process" class="mobile-link">Process</a>
+      <a href="#about" class="mobile-link">About</a>
+      <button class="btn btn-primary mobile-cta" data-trigger-intake>Request a Free Strategy Review</button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(5, 8, 17, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-smooth);
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.5rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--color-text-dark-primary);
+  }
+
+  .logo-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-primary);
+  }
+
+  .logo-text {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-accent {
+    color: var(--color-secondary);
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: var(--color-text-dark-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-dark-primary);
+  }
+
+  .nav-cta {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.85rem;
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-text-dark-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .mobile-toggle svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 4.5rem);
+    background: #050811;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+  }
+
+  .mobile-drawer.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+
+  .mobile-link {
+    text-decoration: none;
+    color: var(--color-text-dark-secondary);
+    font-family: var(--font-headings);
+    font-weight: 600;
+    font-size: 1.4rem;
+    transition: var(--transition-smooth);
+  }
+
+  .mobile-link:hover {
+    color: var(--color-text-dark-primary);
+  }
+
+  .mobile-cta {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .nav-menu {
+      display: none;
+    }
+    
+    .mobile-toggle {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu drawer toggle script
+  const toggleBtn = document.getElementById('mobile-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+  const openIcon = toggleBtn?.querySelector('.toggle-icon-open') as SVGElement;
+  const closeIcon = toggleBtn?.querySelector('.toggle-icon-close') as SVGElement;
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  function toggleMenu() {
+    const isOpen = drawer?.classList.toggle('open');
+    if (isOpen) {
+      if (openIcon) openIcon.style.display = 'none';
+      if (closeIcon) closeIcon.style.display = 'block';
+      document.body.classList.add('modal-open');
+    } else {
+      if (openIcon) openIcon.style.display = 'block';
+      if (closeIcon) closeIcon.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  }
+
+  toggleBtn?.addEventListener('click', toggleMenu);
+
+  // Close drawer when clicking a mobile navigation link
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      drawer?.classList.remove('open');
+      if (openIcon) openIcon.style.display = 'block';
+      if (closeIcon) closeIcon.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    });
+  });
+
+  // Decoupled click event dispatcher to open lead intake modal
+  document.querySelectorAll('[data-trigger-intake]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Close mobile menu if open
+      drawer?.classList.remove('open');
+      if (openIcon) openIcon.style.display = 'block';
+      if (closeIcon) closeIcon.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      
+      window.dispatchEvent(new CustomEvent('open-intake'));
+    });
+  });
+</script>

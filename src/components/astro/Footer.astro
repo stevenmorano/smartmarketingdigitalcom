@@ -1,0 +1,356 @@
+---
+// src/components/astro/Footer.astro
+---
+
+<footer class="footer">
+  <!-- 1. Upper CTA Block -->
+  <div class="footer-cta-block">
+    <div class="container cta-container animate-float">
+      <span class="cta-subtitle">Ready to grow?</span>
+      <h2 class="cta-title">Let’s Build a Smarter Marketing System.</h2>
+      <p class="cta-desc">
+        Get a clear, no-pressure strategy review tailored to your business. I'll show you optimization opportunities, quick wins, and clear next steps.
+      </p>
+      <button class="btn btn-primary cta-btn" data-trigger-intake>Request a Free Strategy Review</button>
+      <p class="cta-subtext">
+        No instant sales call. Share your details first, and I’ll review your marketing system before recommending next steps.
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. Main Footer Directory -->
+  <div class="footer-main">
+    <div class="container main-container">
+      
+      <!-- Brand column -->
+      <div class="footer-col brand-col">
+        <a href="#" class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+            <path d="M2 20h20"></path>
+          </svg>
+          <span class="logo-text">Smart Marketing <span class="logo-accent">Digital</span></span>
+        </a>
+        <p class="brand-desc">
+          AI-powered marketing systems, CRM automation, and data tracking constructed to help growth brands scale profitably.
+        </p>
+        <div class="social-links">
+          <!-- LinkedIn -->
+          <a href="#" class="social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <!-- Twitter / X -->
+          <a href="#" class="social-link" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="#" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links col -->
+      <div class="footer-col">
+        <h4 class="col-title">Quick Links</h4>
+        <ul class="col-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#framework">Framework</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+
+      <!-- Services col -->
+      <div class="footer-col">
+        <h4 class="col-title">Consulting Services</h4>
+        <ul class="col-links">
+          <li><a href="#services">AI Marketing Strategy</a></li>
+          <li><a href="#services">Paid Media Management</a></li>
+          <li><a href="#services">CRM & Email Automation</a></li>
+          <li><a href="#services">Lead Gen Funnels</a></li>
+          <li><a href="#services">Analytics & Tracking</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact col -->
+      <div class="footer-col">
+        <h4 class="col-title">Let’s Connect</h4>
+        <ul class="col-links contact-links">
+          <li>
+            <span class="contact-icon">✉</span>
+            <a href="mailto:hello@smartmarketingdigital.com">hello@smartmarketingdigital.com</a>
+          </li>
+          <li>
+            <span class="contact-icon">📍</span>
+            <span>Worldwide (Remote)</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. Bottom Credits Bar -->
+  <div class="footer-bar">
+    <div class="container bar-container">
+      <p class="copyright">© 2026 Smart Marketing Digital. All rights reserved.</p>
+      <div class="bar-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #050811;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  /* 1. Upper CTA Block */
+  .footer-cta-block {
+    padding: var(--spacing-section-py) 0 4.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    position: relative;
+  }
+
+  .cta-container {
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-subtitle {
+    font-family: var(--font-headings);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .cta-desc {
+    color: var(--color-text-dark-secondary);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 580px;
+  }
+
+  .cta-btn {
+    margin-bottom: 1rem;
+  }
+
+  .cta-subtext {
+    font-size: 0.75rem;
+    color: var(--color-text-dark-secondary);
+    max-width: 420px;
+  }
+
+  /* 2. Main Footer Directory */
+  .footer-main {
+    padding: 4.5rem 0 3.5rem;
+  }
+
+  .main-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .brand-col {
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--color-text-dark-primary);
+  }
+
+  .logo-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: var(--color-primary);
+  }
+
+  .logo-text {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo-accent {
+    color: var(--color-secondary);
+  }
+
+  .brand-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-dark-secondary);
+    line-height: 1.55;
+    max-width: 260px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .social-link {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--color-text-dark-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+  }
+
+  .social-link:hover {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-2px);
+  }
+
+  .social-svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .col-title {
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-dark-primary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom: 0.5rem;
+  }
+
+  .col-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .col-links a {
+    text-decoration: none;
+    color: var(--color-text-dark-secondary);
+    transition: var(--transition-smooth);
+  }
+
+  .col-links a:hover {
+    color: var(--color-text-dark-primary);
+    padding-left: 2px;
+  }
+
+  .contact-links li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: var(--color-text-dark-secondary);
+  }
+
+  .contact-icon {
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+
+  /* 3. Bottom Credits Bar */
+  .footer-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 1.5rem 0;
+    font-size: 0.75rem;
+    color: var(--color-text-dark-secondary);
+  }
+
+  .bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .bar-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .bar-links a {
+    text-decoration: none;
+    color: var(--color-text-dark-secondary);
+    transition: var(--transition-smooth);
+  }
+
+  .bar-links a:hover {
+    color: var(--color-text-dark-primary);
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 900px) {
+    .main-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+    .brand-col {
+      grid-column: span 2;
+    }
+    .brand-desc {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .main-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .brand-col {
+      grid-column: span 1;
+    }
+    .bar-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

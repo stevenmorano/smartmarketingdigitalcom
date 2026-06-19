@@ -1,0 +1,270 @@
+---
+// src/components/astro/Founder.astro
+---
+
+<section class="founder section-light" id="about">
+  <div class="container founder-container">
+    
+    <!-- Left Column: Headshot -->
+    <div class="founder-image-wrapper">
+      <div class="image-glow"></div>
+      <img src="/steven_morano.jpg" alt="Steven Morano - Marketing Consultant" class="founder-img" />
+      <div class="signature-box">
+        <svg class="signature-svg" viewBox="0 0 160 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- A beautiful custom-drawn SVG path for Steven Morano's signature -->
+          <path d="M10 25 C 25 15, 30 10, 35 15 C 40 20, 35 35, 45 30 C 55 25, 60 10, 65 15 C 70 20, 65 30, 75 25 C 80 20, 85 10, 90 15 C 95 20, 90 35, 105 25 C 115 15, 120 10, 130 18 C 135 25, 140 30, 150 25" />
+          <path d="M25 32 L 140 32" stroke-width="1" opacity="0.5" />
+        </svg>
+        <span class="founder-signature-text">Steven Morano</span>
+      </div>
+    </div>
+
+    <!-- Right Column: Biography & Value Props -->
+    <div class="founder-content">
+      <span class="sub-title">About the Founder</span>
+      <h2 class="founder-title">Meet Steven Morano</h2>
+      
+      <div class="founder-bio">
+        <p class="bio-paragraph highlight-text">
+          I'm a hands-on marketing consultant with 10+ years of experience in digital marketing, lead generation, paid media, CRM systems, automation, and analytics.
+        </p>
+        <p class="bio-paragraph">
+          I work with small businesses, service providers, and e-commerce brands to build smarter marketing systems that generate more leads, close more sales, and run more efficiently. 
+        </p>
+        <p class="bio-paragraph">
+          Unlike traditional agencies where your account is handed off to junior coordinators, you work directly with me. No account managers, no communication delays — just expert strategy and direct execution.
+        </p>
+      </div>
+
+      <!-- Solo Consultant Highlights Grid -->
+      <div class="founder-highlights">
+        
+        <!-- Value 1: Direct Access -->
+        <div class="highlight-item">
+          <div class="highlight-icon">👥</div>
+          <div>
+            <h4 class="highlight-heading">Direct Access</h4>
+            <p class="highlight-desc">Work directly with me from start to finish. No middlemen.</p>
+          </div>
+        </div>
+
+        <!-- Value 2: Strategy + Execution -->
+        <div class="highlight-item">
+          <div class="highlight-icon">⚡</div>
+          <div>
+            <h4 class="highlight-heading">Strategy + Execution</h4>
+            <p class="highlight-desc">I do both the high-level thinking and the technical building.</p>
+          </div>
+        </div>
+
+        <!-- Value 3: Automation-First -->
+        <div class="highlight-item">
+          <div class="highlight-icon">🤖</div>
+          <div>
+            <h4 class="highlight-heading">Automation-First</h4>
+            <p class="highlight-desc">Systems that run automatically to save time and drive ROI.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .founder {
+    background-color: var(--color-bg-light-deep);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .founder-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  /* Image Column Styling */
+  .founder-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    justify-self: center;
+  }
+
+  .image-glow {
+    position: absolute;
+    inset: -10px;
+    background: var(--gradient-blue-cyan);
+    opacity: 0.08;
+    filter: blur(25px);
+    border-radius: 24px;
+    z-index: 1;
+  }
+
+  .founder-img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg), 0 20px 40px rgba(5, 8, 17, 0.08);
+    display: block;
+    position: relative;
+    z-index: 2;
+    border: 1px solid var(--color-border-light);
+    aspect-ratio: 4/5;
+    object-fit: cover;
+  }
+
+  /* Signature graphic overlay */
+  .signature-box {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1rem;
+    background: #0d1222;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow-lg), 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    color: #ffffff;
+  }
+
+  .signature-svg {
+    width: 100px;
+    height: 32px;
+    color: var(--color-secondary);
+  }
+
+  .founder-signature-text {
+    font-family: var(--font-headings);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-dark-secondary);
+    margin-top: 0.25rem;
+  }
+
+  /* Content Column Styling */
+  .founder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sub-title {
+    font-family: var(--font-headings);
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .founder-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: var(--color-text-light-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .founder-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .bio-paragraph {
+    font-size: 0.95rem;
+    color: var(--color-text-light-secondary);
+    line-height: 1.6;
+  }
+
+  .highlight-text {
+    font-size: 1.1rem;
+    color: var(--color-text-light-primary);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  /* Value Props Grid */
+  .founder-highlights {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--color-bg-light-card);
+    border: 1px solid var(--color-border-light);
+    padding: 1rem;
+    border-radius: 12px;
+    transition: var(--transition-smooth);
+  }
+
+  .highlight-item:hover {
+    border-color: rgba(59, 130, 246, 0.15);
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .highlight-icon {
+    font-size: 1.1rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: rgba(59, 130, 246, 0.04);
+    border: 1px solid rgba(59, 130, 246, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-primary);
+  }
+
+  .highlight-heading {
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text-light-primary);
+    margin-bottom: 0.2rem;
+  }
+
+  .highlight-desc {
+    font-size: 0.8rem;
+    color: var(--color-text-light-secondary);
+    line-height: 1.4;
+  }
+
+  /* Responsive break points */
+  @media (max-width: 900px) {
+    .founder-container {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    
+    .founder-image-wrapper {
+      max-width: 340px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .founder-content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .founder-highlights {
+      text-align: left;
+    }
+  }
+</style>
