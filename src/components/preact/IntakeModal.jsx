@@ -472,7 +472,7 @@ export default function IntakeModal() {
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="intake-email">Work Email Address</label>
-                  <input class="form-input" type="email" id="intake-email" name="email" placeholder="hello@smartmarketingdigital.com"
+                  <input class="form-input" type="email" id="intake-email" name="email" placeholder="smart@stevenmorano.com"
                     value={formData.email} onInput={handleInputChange} required />
                 </div>
                 <div class="form-group">
