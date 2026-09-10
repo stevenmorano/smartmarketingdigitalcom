@@ -32,7 +32,7 @@ This document logs the major technical and architectural decisions made during t
 * **Date:** 2026-06-19
 * **Context:** The Hero section needs an illustrative diagnostic visual that demonstrates how connected marketing areas are evaluated without presenting fictional performance data.
 * **Alternatives Considered:** Recharts, Chart.js, ApexCharts.
-* **Decision:** Use a lightweight Preact Marketing Control Room with CSS-styled diagnostic cards and a rotating insight state. This supersedes the original KPI-chart concept.
+* **Decision:** Use a lightweight Preact Marketing Control Room with CSS-styled diagnostic cards and a rotating insight state.
 * **Rationale:** The current interface communicates the consultant's whole-picture diagnostic approach without charting dependencies, fictional client results, or live-data implications.
 
 ---
@@ -41,10 +41,10 @@ This document logs the major technical and architectural decisions made during t
 
 * **Status:** Accepted
 * **Date:** 2026-06-19
-* **Context:** The website needs to capture leads through a "Book a Strategy Call" or similar CTA.
+* **Context:** The website needs to capture inquiries through a "Request a Free Strategy Review" CTA.
 * **Alternatives Considered:** Direct Calendly Embed, Email Form.
 * **Decision:** Multi-step modal intake form ("Request a Free Strategy Review").
-* **Rationale:** Direct booking tools allow low-intent visitors to schedule calls without vetting. The 3-step intake form pre-screens leads by gathering name, email, website URL, business type, marketing challenge, current budget, and optimization goals. Qualified opportunities are subsequently sent scheduling links manually.
+* **Rationale:** The 3-step intake form gathers name, email, website URL, business type, marketing challenge, current budget, and optimization goals before the inquiry is reviewed. Completed submissions are sent through Formspree, and any follow-up is handled manually after review.
 
 ---
 ## ADR 5: Scoped Vanilla CSS over Tailwind CSS

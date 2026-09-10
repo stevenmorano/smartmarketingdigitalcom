@@ -13,7 +13,7 @@ Smart Marketing Digital is an independent Marketing Operations & Growth consulti
 1. **Static-first output:** Astro renders public pages to static HTML during the production build, limiting client-side JavaScript to interactive features.
 2. **Selective hydration:** The Marketing Control Room and intake modal are isolated Preact components. Static sections remain Astro templates.
 3. **Scoped styling:** Global design tokens live in `src/styles/global.css`; component styles remain scoped to their Astro or Preact component.
-4. **Shared URL configuration:** The `site` value in `astro.config.mjs` supplies the production origin for canonical URLs, Open Graph URLs, and sitemap generation.
+4. **Shared URL configuration:** The `site` value in `astro.config.mjs` supplies the production origin for canonical URLs, Open Graph URLs, and sitemap generation. Social image tags use the same canonical origin.
 5. **Client-side form delivery:** The intake modal sends inquiries directly to Formspree without a project-owned database or server endpoint.
 
 ---
@@ -49,7 +49,7 @@ graph TD
 - **Process.astro:** Explains the consulting engagement sequence: Diagnose → Prioritize → Improve → Review & Refine.
 - **Founder.astro:** Presents Steven Morano as an independent Marketing Operations & Growth Consultant and uses Astro image optimization for his portrait.
 - **Footer.astro:** Provides the closing CTA, current service taxonomy, verified social links, contact information, and privacy-policy link.
-- **Layout.astro:** Supplies shared HTML structure, metadata, canonical links, structured data, fonts, transitions, and scroll-reveal initialization.
+- **Layout.astro:** Supplies shared HTML structure, metadata, canonical links, Open Graph/Twitter image tags, structured data, fonts, transitions, and scroll-reveal initialization.
 
 ### Preact components
 
@@ -83,6 +83,7 @@ The browser sends a `POST` request to `https://formspree.io/f/{form-id}` with an
 
 - `astro.config.mjs` defines `site: 'https://smart.stevenmorano.com'` and enables `@astrojs/sitemap`.
 - `Layout.astro` derives canonical and Open Graph URLs from `Astro.site` and the current path.
+- `Layout.astro` points `og:image` and `twitter:image` to `https://smart.stevenmorano.com/og-image.png`; the source asset is `public/og-image.png` at 1200×630.
 - `Layout.astro` contains the ProfessionalService JSON-LD for Smart Marketing Digital and Steven Morano.
 - `public/robots.txt` allows crawling and references `https://smart.stevenmorano.com/sitemap-index.xml`.
 - Production builds generate `sitemap-index.xml` and a child sitemap containing the homepage and privacy page.

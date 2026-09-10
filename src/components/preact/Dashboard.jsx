@@ -444,6 +444,82 @@ export default function Dashboard() {
           line-height: 1.35;
         }
 
+        @media (min-width: 2000px) {
+          .dashboard-grid {
+            gap: 0.8rem;
+          }
+
+          .db-card {
+            padding: 1.075rem;
+            border-radius: 17px;
+          }
+
+          .card-title {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+          }
+
+          .context-label {
+            font-size: 0.75rem;
+          }
+
+          .review-count {
+            font-size: 2.05rem;
+          }
+
+          .review-label {
+            font-size: 0.85rem;
+          }
+
+          .status-summary {
+            padding: 0.55rem;
+            font-size: 0.7rem;
+          }
+
+          .status-summary strong {
+            font-size: 0.95rem;
+          }
+
+          .diagnostic-list,
+          .priority-grid {
+            gap: 0.5rem;
+          }
+
+          .diagnostic-row {
+            padding: 0.6rem 0.7rem;
+          }
+
+          .diagnostic-name {
+            font-size: 0.825rem;
+          }
+
+          .status-pill {
+            font-size: 0.6rem;
+          }
+
+          .diagnostic-observation {
+            font-size: 0.75rem;
+          }
+
+          .priority-step {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.775rem;
+          }
+
+          .insight-icon-box {
+            width: 2.5rem;
+            height: 2.5rem;
+          }
+
+          .insight-heading {
+            font-size: 0.875rem;
+          }
+
+          .insight-desc {
+            font-size: 0.775rem;
+          }
+        }
+
         @media (max-width: 768px) {
           .col-diagnostic {
             grid-column: span 12;

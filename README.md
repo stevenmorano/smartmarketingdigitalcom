@@ -26,6 +26,7 @@ The site presents a practical consulting model—**Diagnose → Prioritize → I
 ├── public/
 │   ├── favicon.ico
 │   ├── favicon.svg
+│   ├── og-image.png             # 1200×630 Open Graph and Twitter sharing image
 │   ├── robots.txt              # Crawler rules and production sitemap URL
 │   └── steven_morano.jpg       # Public image used by structured data
 ├── src/
@@ -45,7 +46,7 @@ The site presents a practical consulting model—**Diagnose → Prioritize → I
 │   │       ├── Dashboard.jsx    # Illustrative Marketing Control Room
 │   │       └── IntakeModal.jsx  # Validated Formspree intake flow
 │   ├── layouts/
-│   │   └── Layout.astro         # Shared metadata, canonical tags, schema, and transitions
+│   │   └── Layout.astro         # Shared metadata, social tags, schema, and transitions
 │   ├── pages/
 │   │   ├── index.astro          # Homepage composition
 │   │   └── privacy.astro        # Privacy policy for inquiry submissions
@@ -99,5 +100,7 @@ site: 'https://smart.stevenmorano.com'
 ```
 
 Astro uses this value for canonical URLs, Open Graph URLs, and generated sitemap entries. `public/robots.txt` points crawlers to `https://smart.stevenmorano.com/sitemap-index.xml`. Business URLs in the JSON-LD block inside `Layout.astro` should remain aligned with the same production origin.
+
+`Layout.astro` also defines the Open Graph and Twitter image tags. They point to `https://smart.stevenmorano.com/og-image.png`, backed by the 1200×630 `public/og-image.png` asset, with the approved consulting-positioning alt text.
 
 The Marketing Control Room is an illustrative diagnostic interface. Its six areas and rotating insights demonstrate how Steven evaluates connected marketing concerns; they are not live client data, an automated audit, or performance reporting.

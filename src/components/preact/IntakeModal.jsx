@@ -397,6 +397,11 @@ export default function IntakeModal() {
           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
+        .form-select option {
+          background-color: #ffffff;
+          color: #111827;
+        }
+
         /* Service checklist grid */
         .checklist-grid {
           display: grid;
@@ -535,7 +540,7 @@ export default function IntakeModal() {
           <form onSubmit={handleSubmit}>
             <div class="modal-header">
               <h3 class="modal-title">Request a Strategy Review</h3>
-              <p class="modal-subtitle">Share your metrics. I'll review your channels before recommending steps.</p>
+              <p class="modal-subtitle">Tell me about your business and where your marketing needs help.</p>
             </div>
 
             <div class="steps-indicator">
