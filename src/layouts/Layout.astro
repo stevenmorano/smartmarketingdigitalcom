@@ -8,7 +8,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Smarter Marketing Systems Built with AI. Smart Marketing Digital is a premium, consultant-led marketing systems provider by Steven Morano." } = Astro.props;
+const { title, description = "Independent marketing operations and growth consulting by Steven Morano across strategy, CRM, automation, websites, paid acquisition, analytics, funnels, and customer journeys." } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -46,23 +46,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "Smart Marketing Digital",
-        "image": "https://smartmarketingdigital.com/steven_morano.jpg",
-        "@id": "https://smartmarketingdigital.com/#service",
-        "url": "https://smartmarketingdigital.com",
-        "priceRange": "$$",
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "09:00",
-          "closes": "18:00"
+        "description": "Independent marketing operations and growth consulting by Steven Morano across strategy, CRM, automation, websites, paid acquisition, analytics, funnels, and customer journeys.",
+        "image": "https://smart.stevenmorano.com/steven_morano.jpg",
+        "@id": "https://smart.stevenmorano.com/#service",
+        "url": "https://smart.stevenmorano.com/",
+        "founder": {
+          "@type": "Person",
+          "name": "Steven Morano",
+          "jobTitle": "Marketing Operations & Growth Consultant"
         },
+        "serviceType": [
+          "Marketing audits",
+          "Marketing strategy",
+          "CRM and marketing automation",
+          "Websites and funnel optimization",
+          "Paid acquisition",
+          "Analytics and reporting",
+          "Customer journey consulting"
+        ],
         "sameAs": [
+          "https://www.linkedin.com/in/stevenmorano/",
+          "https://x.com/SteveMorano",
           "https://github.com/stevenmorano"
         ]
       }

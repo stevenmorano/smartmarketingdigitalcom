@@ -1,83 +1,94 @@
-# System Architecture: Smart Marketing Digital
+# Technical Architecture: Smart Marketing Digital
 
-This document outlines the technical design, data flows, components organization, and optimization strategies utilized in the Smart Marketing Digital website.
+This document describes the current technical structure, component responsibilities, and data flow for the Smart Marketing Digital website.
 
----
+Smart Marketing Digital is an independent Marketing Operations & Growth consulting practice. The content model emphasizes **Diagnose → Prioritize → Improve**, while the Process section adds a fourth engagement stage: **Review & Refine**.
 
-## 🏗️ Architectural Core Principles
-
-To guarantee sub-second load times and high conversions, the project implements four core principles:
-1. **Static-First Compilation:** All non-interactive elements are built to raw HTML. No framework runtime is shipped for static sections, resulting in perfect Lighthouse scores.
-2. **Selective Hydration (Islands):** Interactive states (the dynamic dashboard and intake form) are isolated in separate Preact containers and hydrated selectively.
-3. **Vanilla CSS Optimization:** We declare CSS variables globally. Layout files load fonts in parallel. Scoped classes keep files modular, eliminating unused CSS selectors.
-4. **SPA View Transitions:** The site implements Astro's native `<ClientRouter />`. When navigating pages, Astro intercepts standard document requests, performs a fetch to pull the next page, and fades the old page out while fading the new page in client-side. This yields instantaneous navigation while preserving client island state where necessary.
-
+**Production URL:** [https://smart.stevenmorano.com/](https://smart.stevenmorano.com/)
 
 ---
 
-## 📊 Interaction & Data Flow
+## Core Technical Principles
 
-This diagram illustrates how static elements trigger the dynamic modal flow and how data reaches the serverless API.
+1. **Static-first output:** Astro renders public pages to static HTML during the production build, limiting client-side JavaScript to interactive features.
+2. **Selective hydration:** The Marketing Control Room and intake modal are isolated Preact components. Static sections remain Astro templates.
+3. **Scoped styling:** Global design tokens live in `src/styles/global.css`; component styles remain scoped to their Astro or Preact component.
+4. **Shared URL configuration:** The `site` value in `astro.config.mjs` supplies the production origin for canonical URLs, Open Graph URLs, and sitemap generation.
+5. **Client-side form delivery:** The intake modal sends inquiries directly to Formspree without a project-owned database or server endpoint.
+
+---
+
+## Page and Submission Flow
 
 ```mermaid
 graph TD
-    A[Visitor loads page] --> B[CDN serves static HTML]
-    B --> C[Hero & Navbar render immediately]
-    C --> D[Hero Dashboard island hydrates client:load]
-    D --> E[Dashboard SVG line/donut animations draw]
-    
-    C --> F[Navbar/CTA click]
-    F -->|Dispatches Custom Event 'open-intake'| G[Window Event Bus]
-    G -->|Hydrates & Listens| H[IntakeModal Island]
-    H --> I[IntakeModal opens multi-step form]
-    
-    I --> J[Step validation checks inputs]
-    J -->|Submit| K[Async POST to Web3Forms/Formspree API]
-    K -->|200 Success| L[Render Thank-You receipt]
-    K -->|Error| M[Show inline error feedback]
+    A[Visitor requests a page] --> B[Static HTML is served]
+    B --> C[Astro sections render]
+    C --> D[Marketing Control Room hydrates]
+    D --> E[Diagnostic insight card rotates]
+
+    C --> F[Visitor selects an intake CTA]
+    F -->|Dispatch open-intake event| G[IntakeModal opens]
+    G --> H[Validate name, email, and website URL]
+    H -->|Submit| I[AJAX POST to configured Formspree endpoint]
+    I -->|Successful JSON response| J[Show confirmation state]
+    I -->|Configuration, network, or provider error| K[Preserve values and show an error]
 ```
 
 ---
 
-## 🧩 Components Catalog
+## Component Responsibilities
 
-### Static Components (Astro Templates)
-* **Navbar.astro:** Renders navigation headers and hamburger menus. Features a dynamic 3-span toggle that morphs into an "X" when the mobile drawer is active, and applies staggered slide-up animations to mobile drawer links. Hooks onto standard buttons using `data-trigger-intake` and fires a vanilla `CustomEvent` to keep navigation clean and detached from Preact states.
-* **Hero.astro:** Sets the visual dark grid background and titles. Integrates the Preact `<Dashboard client:load />` island.
-* **Solutions.astro:** Grid list of services. Styled with light background properties and flex-wrapping.
-* **Framework.astro:** Visual marketing pipeline representation using connector nodes and an animated SVG feedback loop.
-* **Proof.astro:** High-impact metrics segment displaying safe consulting statistics.
-* **Process.astro:** Identifies the 4-step Audit, Build, Launch, and Scale workflow.
-* **Founder.astro:** Layout containing Steven Morano's details, signature, and value props. Integrates Astro's native `<Image />` component, compressing your portrait asset from 224kB to 27kB WebP (an ~88% reduction) with responsive resizing.
-* **Footer.astro:** Links directories, copyright, and repeats the CTA trigger buttons.
+### Astro components
 
+- **Navbar.astro:** Renders desktop and mobile navigation and dispatches the shared intake event from CTA controls.
+- **Hero.astro:** Contains the approved positioning, capability badges, CTA controls, and the Preact Marketing Control Room mount.
+- **Solutions.astro:** Presents the diagnostic consulting model through six cards: Full Marketing Audit; Priorities & Action Plan; Websites, Offers & Conversion Paths; Acquisition & Channel Strategy; CRM, Follow-Up & Customer Journeys; and Analytics, Reporting & Smarter Workflows.
+- **Framework.astro:** Shows strategy, acquisition, website and conversion, CRM and follow-up, measurement, and customer experience as connected marketing areas. The return loop reinforces ongoing review and improvement rather than a rigid sequence.
+- **Proof.astro:** Displays five selected career metrics and clearly attributes them to Steven's broader marketing career and prior full-time roles.
+- **Process.astro:** Explains the consulting engagement sequence: Diagnose → Prioritize → Improve → Review & Refine.
+- **Founder.astro:** Presents Steven Morano as an independent Marketing Operations & Growth Consultant and uses Astro image optimization for his portrait.
+- **Footer.astro:** Provides the closing CTA, current service taxonomy, verified social links, contact information, and privacy-policy link.
+- **Layout.astro:** Supplies shared HTML structure, metadata, canonical links, structured data, fonts, transitions, and scroll-reveal initialization.
 
-### Interactive Islands (Preact Components)
-* **Dashboard.jsx:** Contains state hooks for cycling the AI insights cards and renders responsive inline SVG paths representing marketing metrics. Encapsulated in a double-bezel wrapper in `Hero.astro` for card depth.
-* **IntakeModal.jsx:** Handles a 3-step stateful lead intake form, validating client name, email, website URL, budget, and services checklists before enabling submitting. Deferred to `client:idle` to optimize initial page loading.
+### Preact components
+
+- **Dashboard.jsx:** Renders the illustrative Marketing Control Room. It presents six connected diagnostic areas, status labels, observations, recommended priorities, and a rotating insight card. It does not display live client data or performance metrics.
+- **IntakeModal.jsx:** Manages the three-step inquiry form, validation, accessible consulting-area checkboxes, focus behavior, loading state, Formspree submission, success confirmation, and recoverable errors.
 
 ---
 
-## 🎨 Design Tokens & Custom CSS Properties
+## Marketing Content Model
 
-Central variables are declared in `/src/styles/global.css`:
+- **Services:** Diagnose the full picture, set priorities, and support practical improvements across the approved consulting areas.
+- **Framework:** Evaluate connected marketing areas together because friction in one area can affect the others.
+- **Process:** Diagnose the current situation, prioritize by goals and likely impact, implement useful improvements, then review and refine.
+- **Technology and AI:** Supporting capabilities used where helpful; neither defines the practice nor performs the consulting work automatically.
 
-```css
-:root {
-  /* Dark backgrounds - Ethereal Glass */
-  --color-bg-dark-deep: #050505;
-  --color-bg-dark-card: #0c0c0e;
-  --color-border-dark: rgba(255, 255, 255, 0.08);
-  
-  /* Light backgrounds */
-  --color-bg-light-deep: #ffffff;
-  --color-bg-light-card: #f8fafc;
-  
-  /* Accent colors */
-  --color-primary: #3b82f6;
-  --color-secondary: #06b6d4;
-  --color-accent-teal: #10b981;
-}
+---
+
+## Formspree Submission Contract
+
+`IntakeModal.jsx` reads the public configuration value:
+
+```text
+PUBLIC_FORMSPREE_FORM_ID
 ```
-* **Font Loading:** Heading styles reference `Outfit` to look bold and premium. Body content references `Plus Jakarta Sans` for legibility (Inter is replaced to meet visual design criteria). Fonts are preconnected to Google Servers inside `Layout.astro` to bypass rendering blocks.
-* **Transitions:** Configured with custom spring physics: `cubic-bezier(0.32, 0.72, 0, 1)` for organic interactive states.
+
+The browser sends a `POST` request to `https://formspree.io/f/{form-id}` with an `Accept: application/json` header. The payload includes the existing intake fields. The modal shows success only after a successful response. Missing configuration and submission failures produce visible error messages without clearing the visitor's entries.
+
+---
+
+## Search and Discovery
+
+- `astro.config.mjs` defines `site: 'https://smart.stevenmorano.com'` and enables `@astrojs/sitemap`.
+- `Layout.astro` derives canonical and Open Graph URLs from `Astro.site` and the current path.
+- `Layout.astro` contains the ProfessionalService JSON-LD for Smart Marketing Digital and Steven Morano.
+- `public/robots.txt` allows crawling and references `https://smart.stevenmorano.com/sitemap-index.xml`.
+- Production builds generate `sitemap-index.xml` and a child sitemap containing the homepage and privacy page.
+
+---
+
+## Styling and Interaction
+
+Design tokens are declared in `src/styles/global.css`. Individual Astro components use scoped `<style>` blocks, while the two Preact islands include styles local to their rendered interface. Shared reveal animations use `IntersectionObserver`, and interactive controls include visible keyboard focus states where applicable.

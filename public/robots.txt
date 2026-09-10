@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://smartmarketingdigital.com/sitemap-index.xml
+Sitemap: https://smart.stevenmorano.com/sitemap-index.xml

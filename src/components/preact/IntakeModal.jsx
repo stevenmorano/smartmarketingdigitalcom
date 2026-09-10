@@ -1,6 +1,24 @@
 // src/components/preact/IntakeModal.jsx
 import { useState, useEffect, useRef } from 'preact/hooks';
 
+const FORMSPREE_FORM_ID = import.meta.env.PUBLIC_FORMSPREE_FORM_ID?.trim();
+
+const isValidWebsiteUrl = (value) => {
+  const trimmedValue = value.trim();
+
+  if (!trimmedValue || /\s/.test(trimmedValue)) return false;
+
+  try {
+    const url = new URL(trimmedValue);
+    return (url.protocol === 'http:' || url.protocol === 'https:') &&
+           url.hostname.includes('.') &&
+           !url.username &&
+           !url.password;
+  } catch {
+    return false;
+  }
+};
+
 export default function IntakeModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
@@ -108,19 +126,31 @@ export default function IntakeModal() {
     });
   };
 
-  // Step 1 Validation
-  const isStep1Valid = () => {
-    return formData.name.trim() !== "" &&
-           formData.email.trim() !== "" &&
-           /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
-           formData.website.trim() !== "";
+  const getStep1Error = () => {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.website.trim()) {
+      return "Please fill out all fields before proceeding.";
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      return "Please enter a valid work email address.";
+    }
+
+    if (!isValidWebsiteUrl(formData.website)) {
+      return "Please enter a complete website URL beginning with http:// or https://.";
+    }
+
+    return "";
   };
 
   const nextStep = () => {
-    if (step === 1 && !isStep1Valid()) {
-      setErrorMsg("Please fill out all fields with valid information before proceeding.");
-      return;
+    if (step === 1) {
+      const validationError = getStep1Error();
+      if (validationError) {
+        setErrorMsg(validationError);
+        return;
+      }
     }
+
     setErrorMsg("");
     setStep(prev => prev + 1);
   };
@@ -132,22 +162,59 @@ export default function IntakeModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrorMsg("");
 
+    const validationError = getStep1Error();
+    if (validationError) {
+      setStep(1);
+      setErrorMsg(validationError);
+      return;
+    }
+
+    if (!FORMSPREE_FORM_ID) {
+      setErrorMsg("Form submission is not configured. Add PUBLIC_FORMSPREE_FORM_ID and restart the site before submitting.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      // Simulated network failure trigger for manual testing (type 'fail' in name or email)
-      if (formData.name.toLowerCase().includes('fail') || formData.email.toLowerCase().includes('fail')) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        throw new Error("Simulated network failure");
+      const submissionData = new FormData();
+      submissionData.append("name", formData.name.trim());
+      submissionData.append("email", formData.email.trim());
+      submissionData.append("website", formData.website.trim());
+      submissionData.append("businessType", formData.businessType);
+      submissionData.append("challenge", formData.challenge);
+      submissionData.append("services", formData.services.join(", "));
+      submissionData.append("monthlySpend", formData.monthlySpend);
+      submissionData.append("improvements", formData.improvements.trim());
+      submissionData.append("message", formData.message.trim());
+
+      const response = await fetch(`https://formspree.io/f/${encodeURIComponent(FORMSPREE_FORM_ID)}`, {
+        method: "POST",
+        body: submissionData,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const providerError = Array.isArray(result?.errors)
+          ? result.errors.map(error => error.message).filter(Boolean).join(" ")
+          : typeof result?.error === "string" ? result.error : "";
+
+        throw new Error(providerError || "Formspree could not accept the request. Please try again.");
       }
 
-      // Simulated submission delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
       setSuccess(true);
     } catch (err) {
-      setErrorMsg("Failed to submit review request. Please check your network connection and try again.");
+      const message = err instanceof Error && err.message
+        ? err.message
+        : "We couldn’t send your request. Please check your connection and try again.";
+
+      setErrorMsg(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -349,11 +416,29 @@ export default function IntakeModal() {
           gap: 0.6rem;
           font-size: 0.8rem;
           transition: var(--transition-smooth);
+          position: relative;
         }
 
         .check-card.checked {
           border-color: var(--color-primary);
           background: rgba(59, 130, 246, 0.05);
+        }
+
+        .check-card:focus-within {
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .check-input {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
         }
 
         .checkbox-custom {
@@ -460,7 +545,7 @@ export default function IntakeModal() {
               <div class={`step-pill ${step >= 3 ? 'active' : ''}`}></div>
             </div>
 
-            {errorMsg && <div class="error-banner">{errorMsg}</div>}
+            {errorMsg && <div class="error-banner" role="alert">{errorMsg}</div>}
 
             {/* STEP 1: Contact & Brand */}
             {step === 1 && (
@@ -477,7 +562,7 @@ export default function IntakeModal() {
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="intake-website">Website or Business URL</label>
-                  <input class="form-input" type="url" id="intake-website" name="website" placeholder="https://smartmarketingdigital.com"
+                  <input class="form-input" type="url" id="intake-website" name="website" placeholder="https://smart.stevenmorano.com"
                     value={formData.website} onInput={handleInputChange} required />
                 </div>
               </div>
@@ -508,23 +593,30 @@ export default function IntakeModal() {
                   </select>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Systems of Interest (Check all that apply)</label>
-                  <div class="checklist-grid">
+                  <span class="form-label" id="systems-interest-label">Systems of Interest (Check all that apply)</span>
+                  <div class="checklist-grid" role="group" aria-labelledby="systems-interest-label">
                     {[
-                      "AI Marketing Strategy",
-                      "Paid Media Management",
-                      "CRM & Email Automation",
-                      "Lead Gen Funnels",
-                      "Analytics & Tracking",
-                      "CRO / Optimization"
+                      "Full Marketing Audit",
+                      "Priorities & Action Plan",
+                      "Websites, Offers & Conversion Paths",
+                      "Acquisition & Channel Strategy",
+                      "CRM, Follow-Up & Customer Journeys",
+                      "Analytics, Reporting & Smarter Workflows"
                     ].map(srv => (
-                      <div class={`check-card ${formData.services.includes(srv) ? 'checked' : ''}`}
-                        onClick={() => handleCheckboxChange(srv)}>
-                        <div class="checkbox-custom">
+                      <label class={`check-card ${formData.services.includes(srv) ? 'checked' : ''}`}>
+                        <input
+                          class="check-input"
+                          type="checkbox"
+                          name="services"
+                          value={srv}
+                          checked={formData.services.includes(srv)}
+                          onChange={() => handleCheckboxChange(srv)}
+                        />
+                        <span class="checkbox-custom" aria-hidden="true">
                           {formData.services.includes(srv) && "✓"}
-                        </div>
+                        </span>
                         <span>{srv}</span>
-                      </div>
+                      </label>
                     ))}
                   </div>
                 </div>
@@ -546,7 +638,7 @@ export default function IntakeModal() {
                 <div class="form-group">
                   <label class="form-label" for="intake-improvements">What are your primary optimization goals?</label>
                   <textarea class="form-textarea" id="intake-improvements" name="improvements" rows="2" 
-                    placeholder="e.g., Increase our ROAS on Meta, build CRM automation workflows..." 
+                    placeholder="Tell me what is not working, where growth feels constrained, and what you would like help improving."
                     value={formData.improvements} onInput={handleInputChange}></textarea>
                 </div>
                 <div class="form-group">

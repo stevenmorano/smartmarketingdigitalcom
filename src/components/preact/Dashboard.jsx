@@ -1,67 +1,123 @@
 // src/components/preact/Dashboard.jsx
 import { useState, useEffect } from 'preact/hooks';
 
-// AI Insights items to cycle through
-const INSIGHTS = [
+const DIAGNOSTIC_INSIGHTS = [
   {
     id: 1,
-    title: "Audience Optimization",
-    text: "Your best performing e-commerce audience segment is 25-34, representing 42% of total conversions.",
+    title: "Fix the Path Before Adding Traffic",
+    text: "Improving acquisition is unlikely to be the first priority if new traffic is still reaching a weak conversion path.",
     badgeColor: "var(--color-primary)",
-    icon: "audience"
+    icon: "path"
   },
   {
     id: 2,
-    title: "Meta Ads Opportunity",
-    text: "Increasing budget by 15% on high-intent lookalikes could raise ROAS by up to 22%.",
+    title: "Look Beyond Lead Volume",
+    text: "More leads may not solve the problem when follow-up and lifecycle marketing are underdeveloped.",
     badgeColor: "var(--color-secondary)",
-    icon: "meta"
+    icon: "journey"
   },
   {
     id: 3,
-    title: "Email Automation Efficiency",
-    text: "Welcome & Abandoned Cart automations generated 37% of revenue this month with 0 ad spend.",
+    title: "Build the Foundation First",
+    text: "Channel expansion usually makes more sense after the core offer and conversion journey are working clearly.",
     badgeColor: "var(--color-accent-teal)",
-    icon: "email"
+    icon: "foundation"
   },
   {
     id: 4,
-    title: "Keyword Cost Reduction",
-    text: "Excluding low-intent search phrases reduced overall Cost Per Lead by 12.5% this week.",
+    title: "Evaluate the Whole System",
+    text: "Marketing problems often span multiple systems, so individual tactics should be evaluated in context.",
     badgeColor: "#8b5cf6",
-    icon: "keyword"
+    icon: "system"
   }
+];
+
+const GROWTH_FOUNDATION = [
+  {
+    name: "Positioning",
+    status: "Needs Attention",
+    tone: "attention",
+    observation: "Primary offer is difficult to understand quickly."
+  },
+  {
+    name: "Acquisition",
+    status: "Opportunity",
+    tone: "opportunity",
+    observation: "Acquisition relies too heavily on a limited set of channels."
+  },
+  {
+    name: "Conversion",
+    status: "Needs Attention",
+    tone: "attention",
+    observation: "Paid traffic reaches a conversion path with unnecessary friction."
+  }
+];
+
+const CUSTOMER_SYSTEM = [
+  {
+    name: "Follow-Up",
+    status: "Needs Attention",
+    tone: "attention",
+    observation: "Lead follow-up ends too early in the customer journey."
+  },
+  {
+    name: "Retention",
+    status: "Opportunity",
+    tone: "opportunity",
+    observation: "Repeat-purchase and lifecycle opportunities are underdeveloped."
+  },
+  {
+    name: "Measurement",
+    status: "Strong",
+    tone: "strong",
+    observation: "Core tracking exists, with opportunities to make reporting more actionable."
+  }
+];
+
+const PRIORITY_ACTIONS = [
+  "Clarify the primary offer",
+  "Improve the conversion path",
+  "Strengthen lead follow-up",
+  "Expand acquisition after the foundation is stronger."
 ];
 
 function renderInsightIcon(iconName) {
   const style = { width: '1.2rem', height: '1.2rem', display: 'block' };
+
   switch (iconName) {
-    case 'audience':
+    case 'path':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
+          <path d="M4 19V9a2 2 0 0 1 2-2h12" />
+          <polyline points="14 3 18 7 14 11" />
+          <circle cx="4" cy="19" r="2" />
         </svg>
       );
-    case 'meta':
+    case 'journey':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-          <polyline points="17 6 23 6 23 12" />
+          <circle cx="6" cy="6" r="2" />
+          <circle cx="18" cy="18" r="2" />
+          <path d="M8 6h3a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3" />
         </svg>
       );
-    case 'email':
+    case 'foundation':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
+          <path d="M3 21h18" />
+          <path d="M5 21V10l7-5 7 5v11" />
+          <path d="M9 21v-6h6v6" />
         </svg>
       );
-    case 'keyword':
+    case 'system':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={style}>
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <circle cx="12" cy="12" r="3" />
+          <circle cx="5" cy="5" r="2" />
+          <circle cx="19" cy="5" r="2" />
+          <circle cx="5" cy="19" r="2" />
+          <circle cx="19" cy="19" r="2" />
+          <path d="m7 7 3 3m4 0 3-3m-7 7-3 3m7-3 3 3" />
         </svg>
       );
     default:
@@ -69,42 +125,52 @@ function renderInsightIcon(iconName) {
   }
 }
 
+function DiagnosticArea({ area }) {
+  return (
+    <div class={`diagnostic-row diagnostic-${area.tone}`}>
+      <div class="diagnostic-row-header">
+        <span class="diagnostic-name">{area.name}</span>
+        <span class={`status-pill status-${area.tone}`}>{area.status}</span>
+      </div>
+      <p class="diagnostic-observation">{area.observation}</p>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const [insightIndex, setInsightIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Cycle insights every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setInsightIndex((prev) => (prev + 1) % INSIGHTS.length);
+        setInsightIndex((prev) => (prev + 1) % DIAGNOSTIC_INSIGHTS.length);
         setIsAnimating(false);
-      }, 500); // Duration of fade-out before switching content
+      }, 500);
     }, 6000);
+
     return () => clearInterval(interval);
   }, []);
 
-  const activeInsight = INSIGHTS[insightIndex];
+  const activeInsight = DIAGNOSTIC_INSIGHTS[insightIndex];
 
   return (
     <div class="dashboard-grid">
       <style>{`
-        /* Scoped styles for the Dashboard Preact component */
         .dashboard-grid {
           display: grid;
           grid-template-columns: repeat(12, 1fr);
-          gap: 1.25rem;
+          gap: 0.75rem;
           width: 100%;
           font-family: var(--font-body);
         }
 
-        /* Card Common Styles - Ethereal Glass Vantablack */
         .db-card {
           background: rgba(12, 12, 14, 0.75);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 16px;
-          padding: 1.5rem;
+          padding: 1rem;
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
@@ -122,266 +188,206 @@ export default function Dashboard() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           color: var(--color-text-dark-secondary);
-          margin-bottom: 1.25rem;
+          margin-bottom: 0.75rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          gap: 1rem;
         }
 
-        /* 1. Performance Overview Card (Leads, CPL, ROAS) */
-        .col-perf {
+        .context-label {
+          color: var(--color-primary);
+          font-family: var(--font-body);
+          font-size: 0.7rem;
+          font-weight: 600;
+          letter-spacing: 0;
+          text-align: right;
+          text-transform: none;
+        }
+
+        .col-overview,
+        .col-priority,
+        .col-insights {
           grid-column: span 12;
         }
 
-        .perf-metrics-container {
+        .col-diagnostic {
+          grid-column: span 6;
+        }
+
+        .control-overview {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
+          grid-template-columns: minmax(110px, 0.7fr) 2.3fr;
+          gap: 1rem;
+          align-items: stretch;
         }
 
-        .metric-row {
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
-        }
-
-        .metric-label {
-          font-size: 0.8rem;
-          color: var(--color-text-dark-secondary);
-        }
-
-        .metric-value-wrap {
+        .review-total {
           display: flex;
           align-items: baseline;
-          gap: 0.5rem;
+          gap: 0.55rem;
+          padding-right: 1rem;
+          border-right: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .metric-val {
+        .review-count {
           font-family: var(--font-headings);
-          font-size: 1.6rem;
-          font-weight: 700;
-          color: var(--color-text-dark-primary);
-        }
-
-        .metric-pct {
-          font-size: 0.75rem;
-          font-weight: 600;
-        }
-
-        .pct-positive { color: var(--color-accent-teal); }
-        .pct-negative { color: #f43f5e; }
-
-        .sparkline-svg {
-          width: 100%;
-          height: 32px;
-          margin-top: 0.5rem;
-          overflow: visible;
-        }
-
-        .spark-path {
-          fill: none;
-          stroke-width: 2;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          stroke-dasharray: 200;
-          stroke-dashoffset: 200;
-          animation: drawPath 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .revenue-path {
-          fill: none;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          stroke-dasharray: 800;
-          stroke-dashoffset: 800;
-          animation: drawPath 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        /* Fallback selector for cache resilience if browser runs old JS with .spark-path class */
-        .revenue-chart-svg .spark-path {
-          stroke-dasharray: 800 !important;
-          stroke-dashoffset: 800 !important;
-          animation: drawPath 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-        }
-
-        /* 2. Lead Funnel Card */
-        .col-funnel {
-          grid-column: span 6;
-        }
-
-        .funnel-container {
-          display: flex;
-          flex-direction: column;
-          gap: 0.6rem;
-          margin-top: 0.5rem;
-        }
-
-        .funnel-stage {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0.6rem 1rem;
-          border-radius: 8px;
-          overflow: hidden;
-          font-size: 0.85rem;
-        }
-
-        .funnel-bg {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, rgba(6, 182, 212, 0.03) 100%);
-          border-left: 3px solid var(--color-primary);
-          transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .funnel-stage:nth-child(2) .funnel-bg {
-          background: linear-gradient(90deg, rgba(59, 130, 246, 0.12) 0%, rgba(6, 182, 212, 0.03) 100%);
-          border-left-color: rgba(59, 130, 246, 0.8);
-        }
-        .funnel-stage:nth-child(3) .funnel-bg {
-          background: linear-gradient(90deg, rgba(6, 182, 212, 0.1) 0%, rgba(16, 185, 129, 0.03) 100%);
-          border-left-color: var(--color-secondary);
-        }
-        .funnel-stage:nth-child(4) .funnel-bg {
-          background: linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.03) 100%);
-          border-left-color: var(--color-accent-teal);
-        }
-
-        .funnel-label {
-          position: relative;
-          z-index: 1;
-          font-weight: 500;
-        }
-
-        .funnel-val {
-          position: relative;
-          z-index: 1;
-          font-weight: 700;
-          font-family: var(--font-headings);
-        }
-
-        /* 3. Top Channels Card */
-        .col-channels {
-          grid-column: span 6;
-        }
-
-        .channels-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 1.25rem;
-        }
-
-        .donut-chart-container {
-          position: relative;
-          width: 90px;
-          height: 90px;
-          flex-shrink: 0;
-        }
-
-        .donut-svg {
-          transform: rotate(-90deg);
-        }
-
-        .donut-ring {
-          fill: none;
-          stroke: rgba(255, 255, 255, 0.05);
-          stroke-width: 8;
-        }
-
-        .donut-segment {
-          fill: none;
-          stroke-width: 8;
-          stroke-linecap: round;
-          stroke-dasharray: 283; /* 2 * PI * 45 */
-          stroke-dashoffset: 283;
-          transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .donut-center-text {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-family: var(--font-headings);
-          font-size: 1.2rem;
-          font-weight: 800;
-          color: var(--color-text-dark-primary);
-        }
-
-        .channels-legend {
-          display: flex;
-          flex-direction: column;
-          gap: 0.4rem;
-          font-size: 0.8rem;
-          flex-grow: 1;
-        }
-
-        .legend-item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .legend-dot-label {
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-        }
-
-        .legend-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-        }
-
-        .legend-val {
-          font-weight: 600;
-          color: var(--color-text-dark-primary);
-        }
-
-        /* 4. Revenue Card */
-        .col-revenue {
-          grid-column: span 12;
-        }
-
-        .revenue-header-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 0.75rem;
-        }
-
-        .rev-val {
-          font-family: var(--font-headings);
-          font-size: 2rem;
+          font-size: 1.9rem;
           font-weight: 800;
           color: var(--color-text-dark-primary);
           line-height: 1;
         }
 
-        .rev-subtext {
-          font-size: 0.75rem;
+        .review-label {
           color: var(--color-text-dark-secondary);
-          margin-top: 0.25rem;
+          font-size: 0.8rem;
+          font-weight: 600;
         }
 
-        .revenue-chart-svg {
-          width: 100%;
-          height: 100px;
-          overflow: visible;
+        .status-breakdown {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.45rem;
         }
 
-        /* 5. AI Insights Card */
-        .col-insights {
-          grid-column: span 12;
+        .status-summary {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.35rem;
+          min-width: 0;
+          padding: 0.5rem;
+          background: rgba(255, 255, 255, 0.025);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 10px;
+          color: var(--color-text-dark-secondary);
+          font-size: 0.66rem;
+          font-weight: 600;
+        }
+
+        .status-summary strong {
+          font-family: var(--font-headings);
+          font-size: 0.9rem;
+          color: var(--color-text-dark-primary);
+        }
+
+        .status-summary-label {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+
+        .status-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        .status-strong-dot { background: var(--color-accent-teal); }
+        .status-opportunity-dot { background: var(--color-secondary); }
+        .status-attention-dot { background: var(--color-primary); }
+
+        .diagnostic-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.45rem;
+        }
+
+        .diagnostic-row {
+          padding: 0.55rem 0.65rem;
+          background: rgba(255, 255, 255, 0.025);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-left-width: 3px;
+          border-radius: 9px;
+        }
+
+        .diagnostic-attention { border-left-color: var(--color-primary); }
+        .diagnostic-opportunity { border-left-color: var(--color-secondary); }
+        .diagnostic-strong { border-left-color: var(--color-accent-teal); }
+
+        .diagnostic-row-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.45rem;
+          margin-bottom: 0.2rem;
+        }
+
+        .diagnostic-name {
+          font-family: var(--font-headings);
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--color-text-dark-primary);
+        }
+
+        .status-pill {
+          padding: 0.12rem 0.4rem;
+          border-radius: 999px;
+          font-size: 0.56rem;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-transform: none;
+          white-space: nowrap;
+        }
+
+        .status-attention {
+          color: var(--color-primary);
+          background: rgba(59, 130, 246, 0.1);
+          border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .status-opportunity {
+          color: var(--color-secondary);
+          background: rgba(6, 182, 212, 0.1);
+          border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .status-strong {
+          color: var(--color-accent-teal);
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .diagnostic-observation {
+          color: var(--color-text-dark-secondary);
+          font-size: 0.7rem;
+          line-height: 1.32;
+        }
+
+        .priority-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.45rem;
+        }
+
+        .priority-step {
+          display: grid;
+          grid-template-columns: auto auto 1fr;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.55rem 0.7rem;
+          background: rgba(255, 255, 255, 0.025);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 10px;
+          color: var(--color-text-dark-primary);
+          font-size: 0.72rem;
+          font-weight: 600;
+        }
+
+        .priority-number {
+          font-family: var(--font-headings);
+          color: var(--color-primary);
+          font-weight: 800;
+        }
+
+        .priority-divider {
+          color: var(--color-text-dark-secondary);
         }
 
         .insight-card-inner {
           display: flex;
-          gap: 1rem;
+          gap: 0.75rem;
           align-items: flex-start;
           transition: opacity 0.5s ease, transform 0.5s ease;
         }
@@ -392,9 +398,8 @@ export default function Dashboard() {
         }
 
         .insight-icon-box {
-          font-size: 1.5rem;
-          width: 2.75rem;
-          height: 2.75rem;
+          width: 2.35rem;
+          height: 2.35rem;
           background: rgba(255, 255, 255, 0.03);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 12px;
@@ -417,210 +422,113 @@ export default function Dashboard() {
         }
 
         .insight-pill {
-          font-size: 0.65rem;
-          font-weight: 700;
-          text-transform: uppercase;
           padding: 0.15rem 0.5rem;
           border-radius: 999px;
-          letter-spacing: 0.05em;
           color: #ffffff;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
         }
 
         .insight-heading {
           font-family: var(--font-headings);
-          font-size: 0.9rem;
+          font-size: 0.82rem;
           font-weight: 600;
           color: var(--color-text-dark-primary);
         }
 
         .insight-desc {
-          font-size: 0.8rem;
           color: var(--color-text-dark-secondary);
-          line-height: 1.4;
+          font-size: 0.72rem;
+          line-height: 1.35;
         }
 
-        /* Responsive Breakpoints */
         @media (max-width: 768px) {
-          .perf-metrics-container {
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-          }
-          .col-funnel, .col-channels {
+          .col-diagnostic {
             grid-column: span 12;
+          }
+
+          .control-overview {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .review-total {
+            padding-right: 0;
+            padding-bottom: 1rem;
+            border-right: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          }
+
+          .priority-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .card-title {
+            align-items: flex-start;
           }
         }
       `}</style>
 
-      {/* 1. Performance Overview Card */}
-      <div class="db-card col-perf">
+      <div class="db-card col-overview">
         <div class="card-title">
-          <span>Performance Overview</span>
-          <span style="font-size: 0.75rem; color: var(--color-primary);">Last 30 Days</span>
+          <span>MARKETING CONTROL ROOM</span>
+          <span class="context-label">Example diagnostic review</span>
         </div>
-        <div class="perf-metrics-container">
-          {/* Leads */}
-          <div class="metric-row">
-            <span class="metric-label">Leads Generated</span>
-            <div class="metric-value-wrap">
-              <span class="metric-val">2,458</span>
-              <span class="metric-pct pct-positive">↑ 39.4%</span>
+        <div class="control-overview">
+          <div class="review-total">
+            <span class="review-count">6</span>
+            <span class="review-label">areas reviewed</span>
+          </div>
+          <div class="status-breakdown">
+            <div class="status-summary">
+              <span class="status-summary-label"><span class="status-dot status-strong-dot"></span>Strong:</span>
+              <strong>1</strong>
             </div>
-            <svg class="sparkline-svg" viewBox="0 0 120 40">
-              <path class="spark-path" stroke="var(--color-primary)" stroke-dashoffset="0"
-                d="M2,35 Q15,25 30,28 T60,18 T90,22 T118,5" style="animation-delay: 0.1s;" />
-            </svg>
-          </div>
-          {/* CPL */}
-          <div class="metric-row">
-            <span class="metric-label">Cost Per Lead</span>
-            <div class="metric-value-wrap">
-              <span class="metric-val">$18.42</span>
-              <span class="metric-pct pct-positive">↓ 12.5%</span>
+            <div class="status-summary">
+              <span class="status-summary-label"><span class="status-dot status-opportunity-dot"></span>Opportunity:</span>
+              <strong>2</strong>
             </div>
-            <svg class="sparkline-svg" viewBox="0 0 120 40">
-              <path class="spark-path" stroke="var(--color-secondary)" stroke-dashoffset="0"
-                d="M2,5 Q15,20 30,12 T60,25 T90,15 T118,32" style="animation-delay: 0.3s;" />
-            </svg>
-          </div>
-          {/* ROAS */}
-          <div class="metric-row">
-            <span class="metric-label">Average ROAS</span>
-            <div class="metric-value-wrap">
-              <span class="metric-val">4.6x</span>
-              <span class="metric-pct pct-positive">↑ 20.7%</span>
-            </div>
-            <svg class="sparkline-svg" viewBox="0 0 120 40">
-              <path class="spark-path" stroke="var(--color-accent-teal)" stroke-dashoffset="0"
-                d="M2,32 Q15,30 30,22 T60,18 T90,10 T118,5" style="animation-delay: 0.5s;" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Lead Funnel Card */}
-      <div class="db-card col-funnel">
-        <div class="card-title">Lead Funnel</div>
-        <div class="funnel-container">
-          <div class="funnel-stage">
-            <div class="funnel-bg" style="width: 100%"></div>
-            <span class="funnel-label">Visitors</span>
-            <span class="funnel-val">32,491</span>
-          </div>
-          <div class="funnel-stage">
-            <div class="funnel-bg" style="width: 76%"></div>
-            <span class="funnel-label">Leads (7.5%)</span>
-            <span class="funnel-val">2,458</span>
-          </div>
-          <div class="funnel-stage">
-            <div class="funnel-bg" style="width: 42%"></div>
-            <span class="funnel-label">Qualified (41.5%)</span>
-            <span class="funnel-val">1,020</span>
-          </div>
-          <div class="funnel-stage">
-            <div class="funnel-bg" style="width: 18%"></div>
-            <span class="funnel-label">Customers (29.6%)</span>
-            <span class="funnel-val">302</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. Top Channels Card */}
-      <div class="db-card col-channels">
-        <div class="card-title">Top Channels</div>
-        <div class="channels-wrapper">
-          <div class="donut-chart-container">
-            <svg class="donut-svg" width="90" height="90" viewBox="0 0 100 100">
-              <circle class="donut-ring" cx="50" cy="50" r="45" />
-              {/* Paid Search Segment - 57% (Offset: 0, length: 161.3) */}
-              <circle class="donut-segment" cx="50" cy="50" r="45" stroke="var(--color-primary)" 
-                stroke-dasharray="283" stroke-dashoffset={283 - 161.3} />
-              {/* Meta Ads Segment - 25% (Offset: 161.3, length: 70.7) */}
-              <circle class="donut-segment" cx="50" cy="50" r="45" stroke="var(--color-secondary)" 
-                stroke-dasharray="283" stroke-dashoffset={283 - 70.7} style="transform-origin: center; transform: rotate(205deg);" />
-              {/* Email Segment - 13% (Offset: 232, length: 36.8) */}
-              <circle class="donut-segment" cx="50" cy="50" r="45" stroke="var(--color-accent-teal)" 
-                stroke-dasharray="283" stroke-dashoffset={283 - 36.8} style="transform-origin: center; transform: rotate(295deg);" />
-              {/* Organic Segment - 5% (Offset: 268.8, length: 14.1) */}
-              <circle class="donut-segment" cx="50" cy="50" r="45" stroke="#8b5cf6" 
-                stroke-dasharray="283" stroke-dashoffset={283 - 14.1} style="transform-origin: center; transform: rotate(342deg);" />
-            </svg>
-            <div class="donut-center-text">63%</div>
-          </div>
-          <div class="channels-legend">
-            <div class="legend-item">
-              <div class="legend-dot-label">
-                <span class="legend-dot" style="background: var(--color-primary)"></span>
-                <span>Paid Search</span>
-              </div>
-              <span class="legend-val">57%</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot-label">
-                <span class="legend-dot" style="background: var(--color-secondary)"></span>
-                <span>Meta Ads</span>
-              </div>
-              <span class="legend-val">25%</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot-label">
-                <span class="legend-dot" style="background: var(--color-accent-teal)"></span>
-                <span>Email</span>
-              </div>
-              <span class="legend-val">13%</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot-label">
-                <span class="legend-dot" style="background: #8b5cf6"></span>
-                <span>Organic</span>
-              </div>
-              <span class="legend-val">5%</span>
+            <div class="status-summary">
+              <span class="status-summary-label"><span class="status-dot status-attention-dot"></span>Needs Attention:</span>
+              <strong>3</strong>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 4. Revenue Card */}
-      <div class="db-card col-revenue">
-        <div class="revenue-header-row">
-          <div>
-            <div class="card-title" style="margin-bottom: 0.25rem;">Revenue Overview</div>
-            <div class="rev-subtext">vs. prior 30 days</div>
-          </div>
-          <div style="text-align: right;">
-            <div class="rev-val">$385,620</div>
-            <div class="metric-pct pct-positive" style="margin-top: 0.25rem;">↑ 18.7%</div>
-          </div>
+      <div class="db-card col-diagnostic">
+        <div class="card-title">GROWTH FOUNDATION</div>
+        <div class="diagnostic-list">
+          {GROWTH_FOUNDATION.map((area) => <DiagnosticArea key={area.name} area={area} />)}
         </div>
-        <svg class="revenue-chart-svg" viewBox="0 0 400 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="var(--color-primary)" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0.0" />
-            </linearGradient>
-          </defs>
-          {/* Gradient Fill under line */}
-          <path d="M2,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L398,15 L398,100 L2,100 Z" fill="url(#chartGlow)" />
-          {/* Grid line grid */}
-          <line x1="0" y1="33" x2="400" y2="33" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
-          <line x1="0" y1="66" x2="400" y2="66" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
-          {/* Animated line path */}
-          <path class="revenue-path" stroke="url(#gradient-line)" stroke-width="3.5"
-            d="M2,90 L40,82 L80,85 L120,70 L160,75 L200,50 L240,55 L280,38 L320,30 L360,42 L398,15" />
-          <linearGradient id="gradient-line" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="var(--color-primary)" />
-            <stop offset="100%" stop-color="var(--color-secondary)" />
-          </linearGradient>
-        </svg>
       </div>
 
-      {/* 5. AI Insights Card */}
+      <div class="db-card col-diagnostic">
+        <div class="card-title">CUSTOMER SYSTEM</div>
+        <div class="diagnostic-list">
+          {CUSTOMER_SYSTEM.map((area) => <DiagnosticArea key={area.name} area={area} />)}
+        </div>
+      </div>
+
+      <div class="db-card col-priority">
+        <div class="card-title">RECOMMENDED FOCUS</div>
+        <div class="priority-grid">
+          {PRIORITY_ACTIONS.map((action, index) => (
+            <div class="priority-step" key={action}>
+              <span class="priority-number">{String(index + 1).padStart(2, '0')}</span>
+              <span class="priority-divider">—</span>
+              <span>{action}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div class="db-card col-insights">
         <div class="card-title">
-          <span>AI Systems Insights</span>
-          <span style="font-size: 0.75rem; color: var(--color-accent-teal); display: flex; align-items: center; gap: 0.25rem;">
-            <span style="width: 6px; height: 6px; background: var(--color-accent-teal); border-radius: 50%; display: inline-block;" class="animate-pulse-glow"></span>
-            Real-time feed
-          </span>
+          <span>DIAGNOSTIC INSIGHT</span>
+          <span class="context-label">Illustrative observations</span>
         </div>
         <div class={`insight-card-inner ${isAnimating ? 'fade-out' : ''}`}>
           <div class="insight-icon-box" style={{ color: activeInsight.badgeColor }}>
@@ -628,7 +536,7 @@ export default function Dashboard() {
           </div>
           <div class="insight-content-box">
             <div class="insight-header">
-              <span class="insight-pill" style={`background-color: ${activeInsight.badgeColor};`}>Insight</span>
+              <span class="insight-pill" style={`background-color: ${activeInsight.badgeColor};`}>EXAMPLE</span>
               <h4 class="insight-heading">{activeInsight.title}</h4>
             </div>
             <p class="insight-desc">{activeInsight.text}</p>

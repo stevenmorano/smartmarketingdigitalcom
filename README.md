@@ -1,78 +1,103 @@
-# Smart Marketing Digital — Marketing Systems Consultant
+# Smart Marketing Digital — Marketing Operations & Growth Consulting
 
-This repository houses the high-performance, single-page marketing website for **Smart Marketing Digital**, a premium, consultant-led marketing systems consultancy operated directly by Steven Morano.
+This repository contains the static marketing website for **Smart Marketing Digital**, an independent Marketing Operations & Growth consulting practice operated by Steven Morano.
 
-The site is built with a focus on speed, SEO, and visual excellence, combining static page compilation with interactive islands where needed.
+The site presents a practical consulting model—**Diagnose → Prioritize → Improve**—across marketing audits, action planning, websites and conversion paths, acquisition strategy, CRM and follow-up, customer journeys, analytics, reporting, and smarter workflows.
 
----
-
-## 🚀 Technology Stack
-
-1. **Framework:** [Astro](https://astro.build) — compiled to 100% static HTML by default to optimize PageSpeed, mobile Core Web Vitals, and search crawlability.
-2. **Interactivity:** [Preact](https://preactjs.com) — a lightweight (3KB) React alternative used for hydrated UI elements ("islands") such as the animated campaign dashboard and the intake modal.
-3. **Styling:** Vanilla CSS — custom properties and scoped styles used exclusively to prevent visual leakage and eliminate CSS library overhead.
-4. **View Transitions:** [ClientRouter](https://docs.astro.build/en/guides/view-transitions/) — native transition router that enables instant, smooth page fade transitions while preserving interactive Preact island states.
-5. **Lead Capture:** Polished multi-step form syncs user metrics and details directly to your serverless email notification provider (e.g. Web3Forms or Formspree).
+**Production URL:** [https://smart.stevenmorano.com/](https://smart.stevenmorano.com/)
 
 ---
 
-## 📂 Project Directory Layout
+## Technology Stack
+
+1. **Framework:** [Astro](https://astro.build) generates a static production site.
+2. **Interactivity:** [Preact](https://preactjs.com) powers the Marketing Control Room and multi-step intake modal as isolated client-side components.
+3. **Styling:** Vanilla CSS with global design tokens and component-scoped styles.
+4. **Navigation:** Astro's [ClientRouter](https://docs.astro.build/en/guides/view-transitions/) handles page transitions.
+5. **Lead capture:** The intake form submits directly to Formspree over AJAX and displays success only after Formspree accepts the request.
+6. **Sitemap:** `@astrojs/sitemap` generates the sitemap index and page sitemap from the canonical `site` value in `astro.config.mjs`.
+
+---
+
+## Project Structure
 
 ```text
 /
-├── public/                 # Static assets (favicons, robots.txt)
-│   ├── favicon.ico         
-│   ├── favicon.svg         
-│   └── robots.txt          # SEO crawler settings
+├── public/
+│   ├── favicon.ico
+│   ├── favicon.svg
+│   ├── robots.txt              # Crawler rules and production sitemap URL
+│   └── steven_morano.jpg       # Public image used by structured data
 ├── src/
-│   ├── assets/             # Raw media assets optimized by Astro
-│   │   └── steven_morano.jpg # Source founder professional headshot
+│   ├── assets/
+│   │   └── steven_morano.jpg   # Founder portrait optimized by Astro
 │   ├── components/
-│   │   ├── astro/          # Static layout sections
-│   │   │   ├── Footer.astro     # Contact details & footer CTA
-│   │   │   ├── Founder.astro    # Steven Morano bio & value props (optimizes profile image)
-│   │   │   ├── Framework.astro  # AI-Enhanced marketing system loop
-│   │   │   ├── Hero.astro       # Headline copy, badges, & dashboard mount
-│   │   │   ├── Navbar.astro     # Fixed header, morphing hamburger menu, event listeners
-│   │   │   ├── Process.astro    # 4-Step Audit-to-Scale timeline
-│   │   │   └── Solutions.astro  # Services grid & solution cards
-│   │   └── preact/         # Dynamic client-side components
-│   │       ├── Dashboard.jsx    # SVG line, donut, funnel charts & AI insight cycle
-│   │       └── IntakeModal.jsx  # Multi-step intake form dialog with focus trap
+│   │   ├── astro/
+│   │   │   ├── Footer.astro     # Footer CTA, navigation, contact, social, and privacy link
+│   │   │   ├── Founder.astro    # Consultant biography and engagement highlights
+│   │   │   ├── Framework.astro  # Connected marketing areas and review loop
+│   │   │   ├── Hero.astro       # Positioning, CTAs, badges, and Control Room mount
+│   │   │   ├── Navbar.astro     # Header navigation and intake triggers
+│   │   │   ├── Process.astro    # Diagnose, Prioritize, Improve, Review & Refine
+│   │   │   ├── Proof.astro      # Selected outcomes from Steven's broader career
+│   │   │   └── Solutions.astro  # Consulting model and service cards
+│   │   └── preact/
+│   │       ├── Dashboard.jsx    # Illustrative Marketing Control Room
+│   │       └── IntakeModal.jsx  # Validated Formspree intake flow
 │   ├── layouts/
-│   │   └── Layout.astro    # Base HTML template, metadata, fonts, & ClientRouter
+│   │   └── Layout.astro         # Shared metadata, canonical tags, schema, and transitions
 │   ├── pages/
-│   │   └── index.astro     # Main page assembling all layouts
+│   │   ├── index.astro          # Homepage composition
+│   │   └── privacy.astro        # Privacy policy for inquiry submissions
 │   └── styles/
-│       └── global.css      # Core variables, typography tokens, resets, animations
-├── astro.config.mjs        # Astro & Preact integration configuration
-├── package.json            # Scripts and package dependencies
-└── tsconfig.json           # Type definitions
+│       └── global.css           # Design tokens, resets, shared components, and animations
+├── astro.config.mjs             # Canonical site URL and Astro integrations
+├── package.json                 # Scripts and dependencies
+└── tsconfig.json                # Astro TypeScript configuration
 ```
-
 
 ---
 
-## 🧞 Developer Scripts
+## Developer Scripts
 
-All commands are run from the project root directory:
+Run commands from the project root:
 
 | Command | Action |
 | :--- | :--- |
-| `npm install` | Installs dependencies |
-| `npm run dev` | Starts local dev server at `localhost:4321` |
-| `npm run build` | Compiles your production static bundle to `./dist/` |
-| `npm run preview` | Previews the build output locally |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the local development server at `localhost:4321` |
+| `npm run build` | Build the static production site in `dist/` |
+| `npm run preview` | Preview the production build locally |
 
 ---
 
-## 🛠️ Custom Integration & Configurations
+## Formspree Intake Setup
 
-### 1. Connecting a Live Lead Capture Form
-The multi-step form is currently set up with a simulated delay to facilitate local testing. To route submissions to your email:
-1. Register for a free access key at [Web3Forms](https://web3forms.com) or [Formspree](https://formspree.io).
-2. Open `src/components/preact/IntakeModal.jsx`.
-3. Locate the commented block in `handleSubmit` and swap the simulation promise for a live `fetch` call passing your access key and form values.
+The multi-step intake form validates name, email, and website URL before the visitor can continue. The remaining selects have defaults, while consulting-area checkboxes and text areas are optional. Failed requests preserve the entered values so the visitor can retry.
 
-### 2. Customizing Logo and Graphics
-All charts (the donut segment, the revenue graph, sparklines, and framework arrows) are rendered as raw **SVG elements** directly within the code. You can easily adjust colors, heights, and coordinates in `Dashboard.jsx` and `Framework.astro`.
+1. Create a form at [Formspree](https://formspree.io) and set its target to a verified notification email address.
+2. Copy the form ID from the endpoint Formspree provides: `https://formspree.io/f/{form-id}`.
+3. For local development, create a `.env` file in the project root containing:
+
+   ```text
+   PUBLIC_FORMSPREE_FORM_ID=your_form_id
+   ```
+
+4. Restart `npm run dev` after adding or changing the variable.
+5. In Vercel, add `PUBLIC_FORMSPREE_FORM_ID` under **Project Settings → Environment Variables** for Production and any Preview environments that should accept submissions, then redeploy.
+
+`PUBLIC_FORMSPREE_FORM_ID` is browser-visible configuration, not a secret. Do not place Formspree account or submission-reading API keys in a `PUBLIC_` variable.
+
+---
+
+## Production URL and Search Metadata
+
+The canonical production origin is configured once in `astro.config.mjs`:
+
+```js
+site: 'https://smart.stevenmorano.com'
+```
+
+Astro uses this value for canonical URLs, Open Graph URLs, and generated sitemap entries. `public/robots.txt` points crawlers to `https://smart.stevenmorano.com/sitemap-index.xml`. Business URLs in the JSON-LD block inside `Layout.astro` should remain aligned with the same production origin.
+
+The Marketing Control Room is an illustrative diagnostic interface. Its six areas and rotating insights demonstrate how Steven evaluates connected marketing concerns; they are not live client data, an automated audit, or performance reporting.
