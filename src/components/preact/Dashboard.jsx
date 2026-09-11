@@ -32,47 +32,64 @@ const DIAGNOSTIC_INSIGHTS = [
   }
 ];
 
-const GROWTH_FOUNDATION = [
+const DIAGNOSTIC_SECTIONS = [
   {
-    name: "Positioning",
-    status: "Needs Attention",
-    tone: "attention",
-    observation: "Primary offer is difficult to understand quickly."
+    title: "GROWTH FOUNDATION",
+    areas: [
+      {
+        name: "Positioning",
+        status: "Needs Attention",
+        tone: "attention",
+        observation: "Primary offer is difficult to understand quickly."
+      },
+      {
+        name: "Acquisition",
+        status: "Opportunity",
+        tone: "opportunity",
+        observation: "Acquisition relies too heavily on a limited set of channels."
+      },
+      {
+        name: "Conversion",
+        status: "Needs Attention",
+        tone: "attention",
+        observation: "Paid traffic reaches a conversion path with unnecessary friction."
+      }
+    ]
   },
   {
-    name: "Acquisition",
-    status: "Opportunity",
-    tone: "opportunity",
-    observation: "Acquisition relies too heavily on a limited set of channels."
-  },
-  {
-    name: "Conversion",
-    status: "Needs Attention",
-    tone: "attention",
-    observation: "Paid traffic reaches a conversion path with unnecessary friction."
+    title: "CUSTOMER SYSTEM",
+    areas: [
+      {
+        name: "Follow-Up",
+        status: "Needs Attention",
+        tone: "attention",
+        observation: "Lead follow-up ends too early in the customer journey."
+      },
+      {
+        name: "Retention",
+        status: "Opportunity",
+        tone: "opportunity",
+        observation: "Repeat-purchase and lifecycle opportunities are underdeveloped."
+      },
+      {
+        name: "Measurement",
+        status: "Strong",
+        tone: "strong",
+        observation: "Core tracking exists, with opportunities to make reporting more actionable."
+      }
+    ]
   }
 ];
 
-const CUSTOMER_SYSTEM = [
-  {
-    name: "Follow-Up",
-    status: "Needs Attention",
-    tone: "attention",
-    observation: "Lead follow-up ends too early in the customer journey."
-  },
-  {
-    name: "Retention",
-    status: "Opportunity",
-    tone: "opportunity",
-    observation: "Repeat-purchase and lifecycle opportunities are underdeveloped."
-  },
-  {
-    name: "Measurement",
-    status: "Strong",
-    tone: "strong",
-    observation: "Core tracking exists, with opportunities to make reporting more actionable."
-  }
-];
+const DIAGNOSTIC_AREAS = DIAGNOSTIC_SECTIONS.flatMap(({ areas }) => areas);
+const STATUS_COUNTS = DIAGNOSTIC_AREAS.reduce((counts, { status }) => {
+  counts[status] += 1;
+  return counts;
+}, {
+  Strong: 0,
+  Opportunity: 0,
+  "Needs Attention": 0
+});
 
 const PRIORITY_ACTIONS = [
   "Clarify the primary offer",
@@ -554,39 +571,34 @@ export default function Dashboard() {
         </div>
         <div class="control-overview">
           <div class="review-total">
-            <span class="review-count">6</span>
+            <span class="review-count">{DIAGNOSTIC_AREAS.length}</span>
             <span class="review-label">areas reviewed</span>
           </div>
           <div class="status-breakdown">
             <div class="status-summary">
               <span class="status-summary-label"><span class="status-dot status-strong-dot"></span>Strong:</span>
-              <strong>1</strong>
+              <strong>{STATUS_COUNTS.Strong}</strong>
             </div>
             <div class="status-summary">
               <span class="status-summary-label"><span class="status-dot status-opportunity-dot"></span>Opportunity:</span>
-              <strong>2</strong>
+              <strong>{STATUS_COUNTS.Opportunity}</strong>
             </div>
             <div class="status-summary">
               <span class="status-summary-label"><span class="status-dot status-attention-dot"></span>Needs Attention:</span>
-              <strong>3</strong>
+              <strong>{STATUS_COUNTS["Needs Attention"]}</strong>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="db-card col-diagnostic">
-        <div class="card-title">GROWTH FOUNDATION</div>
-        <div class="diagnostic-list">
-          {GROWTH_FOUNDATION.map((area) => <DiagnosticArea key={area.name} area={area} />)}
+      {DIAGNOSTIC_SECTIONS.map(({ title, areas }) => (
+        <div class="db-card col-diagnostic" key={title}>
+          <div class="card-title">{title}</div>
+          <div class="diagnostic-list">
+            {areas.map((area) => <DiagnosticArea key={area.name} area={area} />)}
+          </div>
         </div>
-      </div>
-
-      <div class="db-card col-diagnostic">
-        <div class="card-title">CUSTOMER SYSTEM</div>
-        <div class="diagnostic-list">
-          {CUSTOMER_SYSTEM.map((area) => <DiagnosticArea key={area.name} area={area} />)}
-        </div>
-      </div>
+      ))}
 
       <div class="db-card col-priority">
         <div class="card-title">RECOMMENDED FOCUS</div>
